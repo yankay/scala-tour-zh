@@ -1,0 +1,201 @@
+
+.workspace {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 350px;
+	min-height: 200px;
+	text-shadow: 0 0 0 black
+
+}
+
+.workspace-top {
+	position: absolute;
+	top: 0;
+	bottom: 30%;
+	right: 0;
+	left: 0;
+}
+
+.workspace-bottom {
+	position: absolute;
+	top: 70%;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.workspace-editor {
+	position: absolute;
+	top: .6em;
+	bottom: .3em;
+	right: .6em;
+	left: .6em;
+	border: 1px solid #375EAB;
+	background: #FFFFD8;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+
+.editor {
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+	border: none;
+	outline: none;
+	resize: none;
+	background: #FFFFD8;
+	font-size: 16px;
+}
+
+.output {
+	position: absolute;
+	top: .3em;
+	bottom: .6em;
+	right: .6em;
+	left: .6em;
+	border: 1px solid #375EAB;
+	background: #FFFFFF;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-tottomright: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	overflow: auto;
+}
+.output pre {
+	margin: 5px;
+	padding: 0;
+	background: none;
+	font-size: 16px;
+}
+.output .loading {
+	color: #999;
+}
+.output .stdout, .output pre {
+  color: black;
+}
+.output .stderr, .output .error {
+  color: #a11;
+}
+.output .system, .output .exit {
+  color: #375EAB;
+}
+
+.output img {
+	margin: 5px;
+	padding: 0;
+	border: none;
+}
+
+pre, code {
+	font-family: Menlo, monospace;
+	font-size: 14px;
+	border: 0px solid black;
+}
+
+div.source {
+	display: none;
+}
+
+.CodeMirror {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: none;
+	font-family: Menlo, monospace;
+}
+.CodeMirror {
+	height: auto;
+}
+
+.CodeMirror-scroll {
+	height: 100%;
+}
+
+.CodeMirror-gutter {
+	background: inherit;
+	border-right: 1px solid #999;
+}
+
+.CodeMirror-gutter-text {
+	color: #999;
+}
+
+.CodeMirror-matchingbracket {
+	color: #000 !important;
+	text-decoration: underline;
+}
+
+.CodeMirror-focused div.CodeMirror-selected {
+	background: #d0d0d0;
+}
+
+.CodeMirror .errLine {
+	background: #FDD !important;
+}
+
+
+
+pre, code {
+	font-family: Menlo, monospace;
+	font-size: 14px;
+}
+
+
+.controls {
+	position: absolute;
+	z-index: 10;
+	top: 1.2em;
+	right: 2em;
+	text-align: right;
+}
+
+.output , .error {
+	color: #a11;
+}
+
+#brower-not-support{
+	margin-top: 100px;
+	font-size: 200%;
+}
+
+#welcome h1 {
+	font-size: 96px;
+}
+
+
+#welcome p {
+	font-size: 48px;
+	line-height:3;
+}
+
+.scala-red {
+	color:rgb(192, 32, 0);
+}
+
+#logo img{
+    margin-right: 4px;
+}
+
+.navbar a {
+background: rgba(255,255,255,0);
+}
+
+.navbar .lang {
+display: block;
+float: right;
+padding: 10px 10px 10px;
+color: #777777;
+text-shadow: 0 1px 0 #ffffff;
+}
