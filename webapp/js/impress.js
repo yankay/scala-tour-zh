@@ -451,6 +451,28 @@
             
             body.classList.add("impress-on-" + el.id);
             
+
+            var deeps=document.getElementsByClassName("deeply")
+            //if el is deep ,show deep, else hide deep
+            if(el.classList.contains("deeply")){
+                 // console.log("block")
+                 for(var i=0;i<deeps.length;i++){
+                    css(deeps[i],{
+                        opacity:"1",
+                        transition:"opacity 1s"
+                    });
+                 }
+                // $(".deeply").css("display","block")
+            }else{
+                // console.log("none")
+                 for(var i=0;i<deeps.length;i++){
+                    css(deeps[i],{
+                        opacity:"0"
+                    });
+                 }
+                // $(".deeply").css("display","none")
+            }
+
             // compute target state of the canvas based on given step
             var target = {
                 rotate: {
@@ -779,12 +801,13 @@
         document.addEventListener("touchstart", function ( event ) {
             if (event.touches.length === 1) {
                 var x = event.touches[0].clientX,
-                    width = window.innerWidth * 0.3,
+                    y = event.touches[0].clientY,
+                    width = window.innerWidth * 0.1,
                     result = null;
                     
-                if ( x < width ) {
+                if ( x < width && y>42) {
                     result = api.prev();
-                } else if ( x > window.innerWidth - width ) {
+                } else if ( x > window.innerWidth - width && y>42) {
                     result = api.next();
                 }
                 
