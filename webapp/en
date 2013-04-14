@@ -1,0 +1,4 @@
+C:\Users\yank1\oss\scala-tour-zh\webapp\translate-zh.scala:10: error: missing parameter type for expanded function ((x$2) => t.keys.foldLeft(x$2)(((b, a) => b.replace(a, t.get(t)))))
+      println(t.keys.foldLeft(_)((b, a) => b.replace(a, t.get(t)))))
+                              ^
+one error found
