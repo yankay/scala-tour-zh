@@ -1,6 +1,5 @@
 # Scala 指南
 
-
 ## 基本
 
 ### 表达式和值的定义
@@ -21,29 +20,27 @@ def addOne(m: Int): Int = {
 addOne
 ```
 
-### 按名称传递
+#### 按名称传递
+```
 举例Log例子
+```
 
-### 函数是一等公民
+#### 函数可以像值一样
 ```
 可随处定义
 可以匿名
 可以当参数传入
-可以传出
-举Scala By Example例子
 ```
 
+### 类
 
+#### Traits
 
+#### Objects
 
+#### Packages
 
-
-*包和import
-×定义val var
-*语言元素总结
-*基本类型
-
-* For
+### Pattern Matching
 
 ## 进阶
 
