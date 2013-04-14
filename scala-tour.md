@@ -46,6 +46,22 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
 
 
 ### 柯里化
+```
+  import scala.reflect.io.File
+  import java.util.Scanner
+
+  def withScanner(f: File, op: Scanner => Unit) = {
+    val scanner = new Scanner(f.bufferedReader)
+    try {
+      op(scanner)
+    } finally {
+      scanner.close()
+    }
+  }
+
+  withScanner(File("/proc/self/stat"),
+    scanner => println("pid is " + scanner.next()))
+```
 
 
 ### 按名称传递
