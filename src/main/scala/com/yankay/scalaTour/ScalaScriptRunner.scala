@@ -100,7 +100,7 @@ object ScalaScriptProcess {
   def create(compiledLocation: File, out: OutputStream, err: OutputStream): Option[ScalaScriptProcess] = {
 
     val CP = Properties.propOrEmpty("java.class.path") + Properties.propOrEmpty("path.separator") + compiledLocation
-    var args = List("-cp", CP, "Main")
+    var args = List("-cp", CP,"-Djava.net.preferIPv4Stack=true", "Main")
     if (Path(javaf()).exists) {
       val outp = new PrintStream(out, true);
       val errp = new PrintStream(err, true);
