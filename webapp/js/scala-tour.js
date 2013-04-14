@@ -4,7 +4,7 @@ function loading(outputDiv) {
 }
 
 function runFunc(codeStr, outputDiv) {
-  $.ajax("/run?code=" + escape(codeStr), {
+  $.ajax("/run?code=" + encodeURIComponent(codeStr), {
     type: "GET",
     dataType: "json",
     success: function(data) {
