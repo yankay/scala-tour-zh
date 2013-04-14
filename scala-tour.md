@@ -45,7 +45,16 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
 
 
 
-### 柯里化
+### 借贷模式
+
+由于函数可以像值一样作为参数传递，所以可以方便的实现借贷模式。
+
+这个例子是从/proc/self/stat文件中读取当前进程的pid。
+
+withScanner封装了try-finally块，所以在调用者不用再close。
+
+注：当表达式没有返回值时，默认返回Unit。
+
 ```
   import scala.reflect.io.File
   import java.util.Scanner
