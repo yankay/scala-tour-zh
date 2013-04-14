@@ -20,7 +20,8 @@ object ScalaScriptCompilerTest {
 
   import scala.reflect.io.File
   import java.util.Scanner
-  def withScanner(f: File)(op: Scanner => Unit) {
+
+  def withScanner(f: File, op: Scanner => Unit) = {
     val scanner = new Scanner(f.bufferedReader)
     try {
       op(scanner)
@@ -29,7 +30,7 @@ object ScalaScriptCompilerTest {
     }
   }
 
-  withScanner(File("/proc/self/stat"))(
+  withScanner(File("/proc/self/stat"),
     scanner => println("pid is " + scanner.next()))
 
   val tmpDir = System.getProperty("java.io.tmpdir")
