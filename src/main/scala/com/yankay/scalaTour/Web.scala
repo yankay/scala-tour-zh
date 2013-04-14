@@ -62,17 +62,17 @@ class RunServlet extends HttpServlet {
     file match {
       case Some(f) => {
         try {
-          val events = run(f);
-          new RunResponse(errorMsg.toList, events)
+          val (outEvents, errEvents) = run(f);
+          new RunResponse(errorMsg.toList, outEvents, errEvents)
         } finally {
           f.deleteIfExists();
         }
       }
-      case _ => new RunResponse(errorMsg, List())
+      case _ => new RunResponse(errorMsg, List(),List())
     }
   }
 
-  def run(file: File): List[String] = {
+  def run(file: File): (List[String], List[String]) = {
     val out = new ByteArrayOutputStream();
     val err = new ByteArrayOutputStream();
     val proc = ScalaScriptProcess.create(file, out, err);
@@ -85,14 +85,13 @@ class RunServlet extends HttpServlet {
         timeout ! existValue
         val outEvents = new String(out.toByteArray()).lines.toList
         val errEvents = new String(err.toByteArray()).lines.toList
-        val events = outEvents ::: errEvents
         existValue match {
-          case 0 => events.toList
-          case x => events ::: List("exit value is " + x)
+          case 0 => (outEvents, errEvents)
+          case x => (outEvents, errEvents ::: List("exit value is " + x))
         }
 
       }
-      case _ => List()
+      case _ => (List(), List())
     }
   }
 
@@ -129,6 +128,6 @@ class RunServlet extends HttpServlet {
   }
 }
 
-case class RunResponse(errors: List[String], events: List[String]) {
+case class RunResponse(errors: List[String], events: List[String], errEvents: List[String]) {
 
 }
