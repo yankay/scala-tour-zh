@@ -12,10 +12,10 @@ function runFunc(codeStr, outputDiv) {
         return;
       }
       if (data.Errors && data.Errors.length > 0) {
-        setOutput(outputDiv, null, data.Errors);
+        setOutput(outputDiv, null, null, data.Errors);
         return;
       }
-      setOutput(outputDiv, data.Events, false);
+      setOutput(outputDiv, data.Events,data.ErrEvents, false);
     },
     error: function() {
       outputDiv.addClass("error").text(
@@ -24,7 +24,7 @@ function runFunc(codeStr, outputDiv) {
   });
 }
 
-function setOutput(output, events, error) {
+function setOutput(output, events,errevents, error) {
   output.empty();
   if (events) {
 
@@ -33,6 +33,17 @@ function setOutput(output, events, error) {
       msg += events[i] + "\n"
     }
     output.text(msg);
+
+    msg = ""
+    for (var i = 0; i < errevents.length; i++) {
+      msg += errevents[i] + "\n"
+    }
+
+    if(msg != ""){
+        var err = $('<span class="err"/>');
+        err.text(msg);
+        err.appendTo(output);
+    }
 
     var exit = $('<span class="exit"/>');
     exit.text("\nProgram exited.");
@@ -45,7 +56,6 @@ function setOutput(output, events, error) {
       errorText += error[i] + "\n"
     }
     output.addClass("error").text(errorText);
-    return;
   }
 }
 

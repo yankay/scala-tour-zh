@@ -89,7 +89,9 @@
 .output .system, .output .exit {
   color: #375EAB;
 }
-
+.output .stderr, .output .err {
+  color: #a11;
+}
 .output img {
 	margin: 5px;
 	padding: 0;
