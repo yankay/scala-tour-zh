@@ -51,7 +51,7 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
 
 这个例子是从/proc/self/stat文件中读取当前进程的pid。
 
-withScanner封装了try-finally块，所以在调用者不用再close。
+withScanner封装了try-finally块，所以调用者不用再close。
 
 注：当表达式没有返回值时，默认返回Unit。
 
@@ -73,10 +73,26 @@ withScanner封装了try-finally块，所以在调用者不用再close。
 ```
 
 
-### 按名称传递
+### 按名称传递参数
+
+这个例子演示了按名称传递参数，虽然最末有1/0这个明显会产生异常的计算，但运行该程序不会产生异常。
+因为log函数的参数是按名称传递，参数会等到真正访问的时候才会计算，由于logEnable = false，所以被跳过。
+
+试着将def log(msg: => String)修改为def log(msg:String)。由按名称传递修改为按值传递后将会产生异常，尽管我们不想打印这行Log。
+
+按名称传递参数可以减少不必要的计算和异常。
 
 
+```
+  val logEnable = false
 
+  def log(msg: => String) =
+    if (logEnable) println(msg)
+
+  val MSG = "programing is running"
+
+  log(MSG + 1 / 0)
+```
 
 ### 类
 

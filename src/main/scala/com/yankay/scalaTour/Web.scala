@@ -107,7 +107,7 @@ class RunServlet extends HttpServlet {
   def json(mode: RunResponse): String = {
     import org.json4s._
     import org.json4s.JsonDSL._
-    val json = ("Errors" -> mode.errors) ~ ("Events" -> mode.events)
+    val json = ("Errors" -> mode.errors) ~ ("Events" -> mode.events) ~ ("ErrEvents" -> mode.errEvents)
     JsonMethods.pretty(JsonMethods.render(json))
   }
 
