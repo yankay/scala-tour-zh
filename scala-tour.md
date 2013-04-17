@@ -97,18 +97,134 @@ withScanner封装了try-finally块，所以调用者不用再close。
   log(MSG + 1 / 0)
 ```
 
-### 类
+### 类定义
 
-专著与Getter 和 Setter 的省略
+可以用class关键字来定义类。并通过new来创建类。
+在定义类时可以定义字段，如firstName，lastName。这样做还可以自动生成构造函数。
+可以在类中通过def定义函数。var和val定义字段。
+函数名是任何字符如+,-,*,/。
+例子中obama.age_=(51)的函数调用，可以简化为obama.age = 51 。
+obama.age()的函数调用，可以省略小括号，简化为obama.age。
 
-鸭子
+```
+  class Persion(val firstName: String, val lastName: String) {
 
-#### Objects
+    private var _age = 0
+    def age = _age
+    def age_=(newAge: Int) = _age = newAge
 
+    def fullName() = firstName + " " + lastName
+
+    override def toString() = fullName()
+  }
+
+  val obama: Persion = new Persion("Barack", "Obama")
+
+  println("Persion: " + obama)
+  println("firstName: " + obama.firstName)
+  println("lastName: " + obama.lastName)
+  obama.age_=(51)
+  println("age: " + obama.age())
+```
+
+
+### 鸭子类型
+
+走起来像鸭子，叫起来像鸭子，就是鸭子。
+这个例子中使用{ def close(): Unit }作为参数类型。因为任何含有close()的函数的类都可以作为参数。
+不必使用继承这种不够灵活的特性。
+
+```
+  def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
+    try {
+      op(closeAble)
+    } finally {
+      closeAble.close()
+    }
+  }
+
+  class Connection {
+    def close() = println("close Connection")
+  }
+
+  val conn: Connection = new Connection()
+  withClose(conn, conn =>
+    println("do something with Connection"))
+```
+
+
+### 柯里化 
+将()换成{}
+
+```
+  def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
+    try {
+      op(closeAble)
+    } finally {
+      closeAble.close()
+    }
+  }
+
+  class Connection {
+    def close() = println("close Connection")
+  }
+
+  val conn: Connection = new Connection()
+  withClose(conn)(conn =>
+    println("do something with Connection"))
+```
+
+
+### 范型
+
+修改msg为123456
+
+```
+  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
+    try {
+      op(closeAble)
+    } finally {
+      closeAble.close()
+    }
+  }
+
+  class Connection {
+    val msg = "123456"
+    def close() = println("close Connection")
+  }
+
+  val conn: Connection = new Connection()
+  val msg = withClose(conn) { conn =>
+    {
+      println("do something with Connection")
+      conn.msg
+    }
+  }
+  
+  println(msg)
+```
 
 #### Traits
 
+  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
+    try {
+      op(closeAble)
+    } finally {
+      closeAble.close()
+    }
+  }
 
+  class Connection {
+    val msg = "msg in Connection"
+    def close() = println("close Connection")
+  }
+
+  val conn: Connection = new Connection()
+  val msg = withClose(conn)(conn => {
+    println("do something with Connection")
+    conn.msg
+  })
+  println(msg)
 
 #### Packages
 

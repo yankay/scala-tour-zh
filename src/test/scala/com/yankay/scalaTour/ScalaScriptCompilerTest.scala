@@ -7,16 +7,28 @@ import java.io.IOException
 import java.io.Reader
 
 object ScalaScriptCompilerTest {
+  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
+    try {
+      op(closeAble)
+    } finally {
+      closeAble.close()
+    }
+  }
 
-  val logEnable = false
+  class Connection {
+    val msg = 123
+    def close() = println("close Connection")
+  }
 
-  def log(msg: => String) =
-    if (logEnable) println(msg)
-
-  val MSG = "programing is running"
-
-  log(MSG + 1 / 0)
+  val conn: Connection = new Connection()
+  val msg = withClose(conn) { conn =>
+    {
+      println("do something with Connection")
+      conn.msg
+    }
+  }
   
+  println(msg)
 }
 
 
