@@ -75,10 +75,13 @@ withScanner封装了try-finally块，所以调用者不用再close。
 
 ### 按名称传递参数
 
-这个例子演示了按名称传递参数，虽然最末有1/0这个明显会产生异常的计算，但运行该程序不会产生异常。
+这个例子演示了按名称传递参数，最末有1/0这个明显会产生异常的计算，运行该程序会产生异常。
+
+试着将def log(msg: String)修改为def log(msg: => String)。由按值传递修改为按名称传递后将不会产生异常。
+
+
 因为log函数的参数是按名称传递，参数会等到真正访问的时候才会计算，由于logEnable = false，所以被跳过。
 
-试着将def log(msg: => String)修改为def log(msg:String)。由按名称传递修改为按值传递后将会产生异常，尽管我们不想打印这行Log。
 
 按名称传递参数可以减少不必要的计算和异常。
 
@@ -86,7 +89,7 @@ withScanner封装了try-finally块，所以调用者不用再close。
 ```
   val logEnable = false
 
-  def log(msg: => String) =
+  def log(msg: String) =
     if (logEnable) println(msg)
 
   val MSG = "programing is running"
@@ -96,9 +99,16 @@ withScanner封装了try-finally块，所以调用者不用再close。
 
 ### 类
 
-#### Traits
+专著与Getter 和 Setter 的省略
+
+鸭子
 
 #### Objects
+
+
+#### Traits
+
+
 
 #### Packages
 

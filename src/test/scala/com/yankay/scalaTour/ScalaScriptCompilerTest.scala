@@ -16,6 +16,7 @@ object ScalaScriptCompilerTest {
   val MSG = "programing is running"
 
   log(MSG + 1 / 0)
+  
 }
 
 
