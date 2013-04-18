@@ -154,7 +154,14 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
 
 
 ### 柯里化 
-将()换成{}
+
+这个例子和上面的功能相同。不同的是使用了柯里化（Currying)的技术。
+def add(x:Int, y:Int) = x + y 是普通的函数
+def add(x:Int) = (y:Int) => x + y 是柯里化后的函数，相当于返回一个匿名函数表达式。
+def add(x:Int)(y:Int) = x + y 是上面的简化写法
+柯里化可以让我们构造出更像原生语言提供的功能的代码
+例子中的withclose(...)(...)换成withclose(...){...}
+是否和java中的synchronized关键字用法很像？
 
 ```
   def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
@@ -177,7 +184,9 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
 
 ### 范型
 
-修改msg为123456
+上面的例子可以使用泛型变得更简洁更灵活。
+试着将val msg = "123456"修改为val msg = 123456。
+虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
 
 ```
   def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
@@ -204,29 +213,33 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
   println(msg)
 ```
 
-#### Traits
+### Traits
 
-  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
-    try {
-      op(closeAble)
-    } finally {
-      closeAble.close()
+Traits就像是有函数体的Interface。使用with关键字来混入。
+这个例子是给java.util.ArrayList添加了foreach的功能。
+试着再在后面加上with JsonAble，给list添加toJson的能力
+
+```
+  trait ForEachAble[A] {
+    def iterator: java.util.Iterator[A]
+    def foreach(f: A => Unit) = {
+      val iter = iterator
+      while (iter.hasNext)
+        f(iter.next)
     }
   }
 
-  class Connection {
-    val msg = "msg in Connection"
-    def close() = println("close Connection")
+  trait JsonAble {
+    override def toString() =
+      scala.util.parsing.json.JSONFormat.defaultFormatter(this)
   }
 
-  val conn: Connection = new Connection()
-  val msg = withClose(conn)(conn => {
-    println("do something with Connection")
-    conn.msg
-  })
-  println(msg)
+  val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
+  list.add(1); list.add(2)
 
-#### Packages
+  list.foreach(x => println(x))
+  println("Json: " + list.toString())
+```
 
 ### Pattern Matching
 

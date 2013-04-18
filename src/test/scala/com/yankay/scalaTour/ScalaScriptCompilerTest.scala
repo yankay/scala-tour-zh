@@ -7,28 +7,26 @@ import java.io.IOException
 import java.io.Reader
 
 object ScalaScriptCompilerTest {
-  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
-    try {
-      op(closeAble)
-    } finally {
-      closeAble.close()
+
+  trait ForEachAble[A] {
+    def iterator: java.util.Iterator[A]
+    def foreach(f: A => Unit) = {
+      val iter = iterator
+      while (iter.hasNext)
+        f(iter.next)
     }
   }
 
-  class Connection {
-    val msg = 123
-    def close() = println("close Connection")
+  trait JsonAble {
+    override def toString() =
+      scala.util.parsing.json.JSONFormat.defaultFormatter(this)
   }
 
-  val conn: Connection = new Connection()
-  val msg = withClose(conn) { conn =>
-    {
-      println("do something with Connection")
-      conn.msg
-    }
-  }
-  
-  println(msg)
+  val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
+  list.add(1); list.add(2)
+
+  list.foreach(x => println(x))
+  println("Json: " + list.toString())
 }
 
 
