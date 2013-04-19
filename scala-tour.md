@@ -243,6 +243,26 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 
 ### Pattern Matching
 
+模式匹配是类似switch-case特性，但更加灵活；也类似if-else，但更加简约。
+这个例子展示的使用用模式匹配实现斐波那契。
+使用case来匹配参数，如果case _，则可以匹配任何参数。
+这个例子有所不足，当输入负数时，会无限循环。
+可以在case后添加if语句判断，将case n: Int 修改为 case n: Int if (n > 1)即可。
+可以在case _ 前加上 case n: String => fibonacci(n.toInt)，使之匹配字符串类型。
+在最后添加 println(fibonacci(-3))；println(fibonacci("3"))；来检查刚刚修改的效果。
+
+
+```
+  def fibonacci(in: Any): Int = in match {
+    case 0 => 0
+    case 1 => 1
+    case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
+    case _ => 0
+  }
+
+  println(fibonacci(3))
+```
+
 ## 进阶
 
 ## 并发

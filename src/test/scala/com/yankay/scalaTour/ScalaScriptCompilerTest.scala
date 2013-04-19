@@ -8,25 +8,18 @@ import java.io.Reader
 
 object ScalaScriptCompilerTest {
 
-  trait ForEachAble[A] {
-    def iterator: java.util.Iterator[A]
-    def foreach(f: A => Unit) = {
-      val iter = iterator
-      while (iter.hasNext)
-        f(iter.next)
-    }
+  def fibonacci(in: Any): Int = in match {
+    case 0 => 0
+    case n => 1
+    case n: Int if (n > 1) => fibonacci(n - 1) + fibonacci(n - 2)
+    case n: String => fibonacci(n.toInt)
+    case _ => 0
   }
 
-  trait JsonAble {
-    override def toString() =
-      scala.util.parsing.json.JSONFormat.defaultFormatter(this)
-  }
+  println(fibonacci(3))
+  println(fibonacci(-3))
+  println(fibonacci("3"))
 
-  val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
-  list.add(1); list.add(2)
-
-  list.foreach(x => println(x))
-  println("Json: " + list.toString())
 }
 
 
