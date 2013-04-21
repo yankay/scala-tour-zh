@@ -30,7 +30,7 @@ println(helloWorld)
 def square(a: Int) = a * a
 
 def squareWithBlock(a: Int) = {
-  a * a
+	a * a
 }
 
 val squareVal = (a: Int) => a * a
@@ -56,20 +56,20 @@ withScanner封装了try-finally块，所以调用者不用再close。
 注：当表达式没有返回值时，默认返回Unit。
 
 ```
-  import scala.reflect.io.File
-  import java.util.Scanner
+	import scala.reflect.io.File
+	import java.util.Scanner
 
-  def withScanner(f: File, op: Scanner => Unit) = {
-    val scanner = new Scanner(f.bufferedReader)
-    try {
-      op(scanner)
-    } finally {
-      scanner.close()
-    }
-  }
+	def withScanner(f: File, op: Scanner => Unit) = {
+		val scanner = new Scanner(f.bufferedReader)
+		try {
+			op(scanner)
+		} finally {
+			scanner.close()
+		}
+	}
 
-  withScanner(File("/proc/self/stat"),
-    scanner => println("pid is " + scanner.next()))
+	withScanner(File("/proc/self/stat"),
+		scanner => println("pid is " + scanner.next()))
 ```
 
 
@@ -87,14 +87,14 @@ withScanner封装了try-finally块，所以调用者不用再close。
 
 
 ```
-  val logEnable = false
+	val logEnable = false
 
-  def log(msg: String) =
-    if (logEnable) println(msg)
+	def log(msg: String) =
+		if (logEnable) println(msg)
 
-  val MSG = "programing is running"
+	val MSG = "programing is running"
 
-  log(MSG + 1 / 0)
+	log(MSG + 1 / 0)
 ```
 
 ### 类定义
@@ -107,24 +107,24 @@ withScanner封装了try-finally块，所以调用者不用再close。
 obama.age()的函数调用，可以省略小括号，简化为obama.age。
 
 ```
-  class Persion(val firstName: String, val lastName: String) {
+	class Persion(val firstName: String, val lastName: String) {
 
-    private var _age = 0
-    def age = _age
-    def age_=(newAge: Int) = _age = newAge
+		private var _age = 0
+		def age = _age
+		def age_=(newAge: Int) = _age = newAge
 
-    def fullName() = firstName + " " + lastName
+		def fullName() = firstName + " " + lastName
 
-    override def toString() = fullName()
-  }
+		override def toString() = fullName()
+	}
 
-  val obama: Persion = new Persion("Barack", "Obama")
+	val obama: Persion = new Persion("Barack", "Obama")
 
-  println("Persion: " + obama)
-  println("firstName: " + obama.firstName)
-  println("lastName: " + obama.lastName)
-  obama.age_=(51)
-  println("age: " + obama.age())
+	println("Persion: " + obama)
+	println("firstName: " + obama.firstName)
+	println("lastName: " + obama.lastName)
+	obama.age_=(51)
+	println("age: " + obama.age())
 ```
 
 
@@ -135,21 +135,21 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
 不必使用继承这种不够灵活的特性。
 
 ```
-  def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
-    try {
-      op(closeAble)
-    } finally {
-      closeAble.close()
-    }
-  }
+	def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
+		try {
+			op(closeAble)
+		} finally {
+			closeAble.close()
+		}
+	}
 
-  class Connection {
-    def close() = println("close Connection")
-  }
+	class Connection {
+		def close() = println("close Connection")
+	}
 
-  val conn: Connection = new Connection()
-  withClose(conn, conn =>
-    println("do something with Connection"))
+	val conn: Connection = new Connection()
+	withClose(conn, conn =>
+		println("do something with Connection"))
 ```
 
 
@@ -164,21 +164,21 @@ def add(x:Int)(y:Int) = x + y 是上面的简化写法
 是否和java中的synchronized关键字用法很像？
 
 ```
-  def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
-    try {
-      op(closeAble)
-    } finally {
-      closeAble.close()
-    }
-  }
+	def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
+		try {
+			op(closeAble)
+		} finally {
+			closeAble.close()
+		}
+	}
 
-  class Connection {
-    def close() = println("close Connection")
-  }
+	class Connection {
+		def close() = println("close Connection")
+	}
 
-  val conn: Connection = new Connection()
-  withClose(conn)(conn =>
-    println("do something with Connection"))
+	val conn: Connection = new Connection()
+	withClose(conn)(conn =>
+		println("do something with Connection"))
 ```
 
 
@@ -189,28 +189,28 @@ def add(x:Int)(y:Int) = x + y 是上面的简化写法
 虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
 
 ```
-  def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
-    try {
-      op(closeAble)
-    } finally {
-      closeAble.close()
-    }
-  }
+	def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
+		try {
+			op(closeAble)
+		} finally {
+			closeAble.close()
+		}
+	}
 
-  class Connection {
-    val msg = "123456"
-    def close() = println("close Connection")
-  }
+	class Connection {
+		val msg = "123456"
+		def close() = println("close Connection")
+	}
 
-  val conn: Connection = new Connection()
-  val msg = withClose(conn) { conn =>
-    {
-      println("do something with Connection")
-      conn.msg
-    }
-  }
-  
-  println(msg)
+	val conn: Connection = new Connection()
+	val msg = withClose(conn) { conn =>
+		{
+			println("do something with Connection")
+			conn.msg
+		}
+	}
+	
+	println(msg)
 ```
 
 ### Traits
@@ -220,25 +220,25 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 试着再在后面加上with JsonAble，给list添加toJson的能力
 
 ```
-  trait ForEachAble[A] {
-    def iterator: java.util.Iterator[A]
-    def foreach(f: A => Unit) = {
-      val iter = iterator
-      while (iter.hasNext)
-        f(iter.next)
-    }
-  }
+	trait ForEachAble[A] {
+		def iterator: java.util.Iterator[A]
+		def foreach(f: A => Unit) = {
+			val iter = iterator
+			while (iter.hasNext)
+				f(iter.next)
+		}
+	}
 
-  trait JsonAble {
-    override def toString() =
-      scala.util.parsing.json.JSONFormat.defaultFormatter(this)
-  }
+	trait JsonAble {
+		override def toString() =
+			scala.util.parsing.json.JSONFormat.defaultFormatter(this)
+	}
 
-  val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
-  list.add(1); list.add(2)
+	val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
+	list.add(1); list.add(2)
 
-  list.foreach(x => println(x))
-  println("Json: " + list.toString())
+	list.foreach(x => println(x))
+	println("Json: " + list.toString())
 ```
 
 ### Pattern Matching
@@ -253,18 +253,43 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 
 
 ```
-  def fibonacci(in: Any): Int = in match {
-    case 0 => 0
-    case 1 => 1
-    case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
-    case _ => 0
-  }
+	def fibonacci(in: Any): Int = in match {
+		case 0 => 0
+		case 1 => 1
+		case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
+		case _ => 0
+	}
 
-  println(fibonacci(3))
+	println(fibonacci(3))
 ```
+### 语法元素总结
 
-## 进阶
+
+## 函数式编程
+
+
+### 尾递归
+### 函数式和过程式对比
+
+### Unix pipeline
+
+
+
+正则抽取
+
+
+
 
 ## 并发
 
 ## 实践
+### 使用Java
+### Option null
+### 相等性
+programming in Scala
+
+### 抽取器
+programming in Scala
+326
+### Memoization
+Email
