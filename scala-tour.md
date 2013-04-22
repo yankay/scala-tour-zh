@@ -262,20 +262,104 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 
 	println(fibonacci(3))
 ```
-### 语法元素总结
+
+### Case Class
+
+case class 顾名思义就是为case语句专门设计的类。
+在普通类的基础上添加了和类名一直的工厂方法，
+还添加了hashcode,equals和toString方法。
+试试最后添加  println(Sum(1,2)) 。
+由于使用了require(n >= 0)来检验参数，尝试使用负数，会抛出异常。
+
+
+```
+  abstract class Expr
+
+  case class FibonacciExpr(n: Int) extends Expr {
+    require(n >= 0)
+  }
+
+  case class SumExpr(a: Expr, b: Expr) extends Expr
+
+  def value(in: Expr): Int = in match {
+    case FibonacciExpr(0) => 0
+    case FibonacciExpr(1) => 1
+    case FibonacciExpr(n) => value(SumExpr(FibonacciExpr(n - 1), FibonacciExpr(n - 2)))
+    case SumExpr(a, b) => value(a) + value(b)
+    case _ => 0
+  }
+  println(value(FibonacciExpr(3)))
+```
+
+
 
 
 ## 函数式编程
 
+### 函数式的威力
 
+这个例子是判断一个List中是否含有奇数。
+第一行到倒数第二行是使用for循环的过程式编程解决。最后一行是通过函数式编程解决。
+通过将函数作为参数，可以使程序极为简洁。其中 _ % 2 == 1 是 (x: Int) => x % 2 == 的简化写法。
+相比于Ruby等动态语言,这威力来自于科学而不是魔法
+
+```
+  val list = List(1, 2, 3, 4)
+
+  def containsOdd(list: List[Int]): Boolean = {
+    for (i <- list) {
+      if (i % 2 == 1)
+        return true;
+    }
+    return false;
+  }
+
+  println("list containsOdd by for loop:" + containsOdd(list))
+
+  println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
+```
+
+### 函数式的威力 × n
+Input Output
+Unix pipeline
+```
+  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+
+  println("cat file | grep 'warn' | grep '2013' | wc : " 
+      + file.filter(_.contains("warn")).filter(_.contains("2013")).size)
+```
+### word count
+
+foldLeft(0)(_ + _) 修改为sum
+```
+  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+
+  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+  
+  val num = file.map(wordcount).foldLeft(0)(_ + _)
+
+  println("wordcount:" + num)
+```
 ### 尾递归
+```
+  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+
+  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+
+  def foldLeft(list: List[Int])(init: Int)(f: (Int, Int) => Int): Int = {
+    list match {
+      case List() => init
+      case head :: tail => foldLeft(tail)(f(init, head))(f)
+    }
+  }
+
+  val num = foldLeft(file.map(wordcount))(0)(_ + _)
+
+  println("wordcount:" + num)
+```
+
+
 ### 函数式和过程式对比
-
-### Unix pipeline
-
-
-
-正则抽取
 
 
 
@@ -293,3 +377,5 @@ programming in Scala
 326
 ### Memoization
 Email
+
+正则抽取
