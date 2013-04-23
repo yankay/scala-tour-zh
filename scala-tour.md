@@ -241,6 +241,9 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 	println("Json: " + list.toString())
 ```
 
+
+## 函数式编程
+
 ### Pattern Matching
 
 模式匹配是类似switch-case特性，但更加灵活；也类似if-else，但更加简约。
@@ -291,11 +294,6 @@ case class 顾名思义就是为case语句专门设计的类。
   println(value(FibonacciExpr(3)))
 ```
 
-
-
-
-## 函数式编程
-
 ### 函数式的威力
 
 这个例子是判断一个List中是否含有奇数。
@@ -319,28 +317,43 @@ case class 顾名思义就是为case语句专门设计的类。
   println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
 ```
 
-### 函数式的威力 × n
-Input Output
-Unix pipeline
+### 函数式真正的威力
+
+函数式除了能简化代码外，更重要的是他关注的是Input和Output，函数本身没有副作用。
+就是Unix pipeline一样，简单的命令可以组合在一起。
+List的filter方法接受一个过滤函数，返回一个新的List
+如果你喜欢Unix pipeline的方式，你一定也会喜欢函数式编程。
+这个例子是用函数式的代码模拟“cat file | grep 'warn' | grep '2013' | wc”的行为。
+
 ```
   val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
   println("cat file | grep 'warn' | grep '2013' | wc : " 
       + file.filter(_.contains("warn")).filter(_.contains("2013")).size)
 ```
-### word count
+### Word Count
+Word Count是一个MapReduce的一个经典示例。巧合的是，使用函数式的编程法，用类似MapReduce的方法实现word count也是最直观的。
+这个例子介绍了List的两个重要的高阶方法map和reduceLeft。
+List的map方法接受一个转换函数，返回一个经过转换的List。该例子中会转换为[1,1,1,1]
+List的reduceLeft方法接受一个合并函数，依次遍历合并。第一个参数是合并后的值，第二个参数是下一个需要合并的值。
+将reduceLeft(_ + _)修改为foldLeft(0)(_ + _)。foldLeft比将reduceLeft更常用，因为他可以提供一个初始参数。
+Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更清晰
 
-foldLeft(0)(_ + _) 修改为sum
 ```
   val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
   def wordcount(str: String): Int = str.split(" ").count("msg" == _)
   
-  val num = file.map(wordcount).foldLeft(0)(_ + _)
+  val num = file.map(wordcount).reduceLeft(_ + _)
 
   println("wordcount:" + num)
 ```
 ### 尾递归
+
+这个例子是用尾递归实现foldLeft。尾递归是递归的一种，特点在于会在函数的最末调用自身。
+当用List做match case时。可以使用 :: 来解构。返回第一个元素head，和剩余元素tail。
+尾递归会在编译期优化，因此不用担心一般递归造成的栈溢出问题。
+
 ```
   val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
@@ -358,9 +371,32 @@ foldLeft(0)(_ + _) 修改为sum
   println("wordcount:" + num)
 ```
 
+### 更强大的For
 
-### 函数式和过程式对比
+循环语句是过程式编程的特产，Scala对其加以改进，成为适应函数式风格的利器。
+For循环也是有返回值的，其返回是一个List。在每一轮迭代中加入yield，yield后的值可以加入到List中。
+这个例子是使用for循环代替map函数。
 
+```
+  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+
+  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+
+  val counts =
+    for (line <- file)
+      yield wordcount(line)
+
+  val num = counts.reduceLeft(_ + _)
+
+  println("wordcount:" + num)
+```
+### Option
+
+get propery
+
+### Lazy
+
+get from DB
 
 
 
@@ -368,7 +404,6 @@ foldLeft(0)(_ + _) 修改为sum
 
 ## 实践
 ### 使用Java
-### Option null
 ### 相等性
 programming in Scala
 
@@ -379,3 +414,5 @@ programming in Scala
 Email
 
 正则抽取
+
+#SBT
