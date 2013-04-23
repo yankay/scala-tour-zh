@@ -392,12 +392,56 @@ For循环也是有返回值的，其返回是一个List。在每一轮迭代中�
 ```
 ### Option
 
-get propery
+NullException是Java中最常见的异常，要想避免他只有不断检查null。Scala提供了Option机制来解决。
+这个例子包装了可能返回null的getProperty方法，使其返回一个Option。
+这样就可以不再漫无目的地null检查。只要Option类型的值即可。
+使用pattern match来检查是常见做法。也可以使用getOrElse来提供当为None时的默认值。
+给力的是Option还可以看作是最大长度为1的List，其的强大功能都可以使用。
+尝试在最后添加  osName.foreach(print _) 。
+
+
+```
+
+  def getProperty(name: String): Option[String] = {
+    val value = System.getProperty(name)
+    if (value != null) Some(value) else None
+  }
+
+  val osName = getProperty("os.name")
+
+  osName match {
+    case Some(value) => println(value)
+    case _ => println("none")
+  }
+
+  println(osName.getOrElse("none"))
+
+  
+
+```
+
 
 ### Lazy
 
-get from DB
+Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初始化。
+这个例子是从github获得Scala的版本号，由于访问网络需要较多时间。
+如果费尽力气获取到，而调用它的代码却不去访问就会很浪费。
+可以使用lazy来延迟获取。
 
+```
+  class ScalaCurrentVersion(val url: String) {
+    lazy val source= {
+      println("fetching from url...")
+      scala.io.Source.fromURL(url).getLines().toList
+    }
+    lazy val majorVersion = source.find(_.contains("version.major"))
+    lazy val minorVersion = source.find(_.contains("version.minor"))
+  }
+  val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
+  println("get scala version from " + version.url)
+  version.majorVersion.foreach(println _)
+  version.minorVersion.foreach(println _)
+```
 
 
 ## 并发

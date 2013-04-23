@@ -4,19 +4,18 @@ import java.lang.Boolean
 
 object ScalaScriptCompilerTest {
 
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
-
-  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
-
-  val counts =
-    for (line <- file)
-      yield wordcount(line)
-
-  println("counts :" + counts)
-
-  val num = counts.reduceLeft(_ + _)
-
-  println("wordcount:" + num)
+  class ScalaCurrentVersion(val url: String) {
+    lazy val source: List[String] = {
+      println("fetching from url...")
+      scala.io.Source.fromURL(url).getLines().toList
+    }
+    lazy val majorVersion: Option[String] = source.find(_.contains("version.major"))
+    lazy val minorVersion: Option[String] = source.find(_.contains("version.minor"))
+  }
+  val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
+  println("get scala version from " + version.url)
+  version.majorVersion.foreach(println _)
+  version.minorVersion.foreach(println _)
 
 }
 
