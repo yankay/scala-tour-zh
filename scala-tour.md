@@ -446,6 +446,99 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 
 ## 并发
 
+### 使用Actor来并发
+```
+  import scala.actors.Actor
+
+  class EchoServer extends Actor {
+    def act = loop {
+      react {
+        case msg => println("echo " + msg)
+      }
+    }
+    start
+  }
+
+  val echoServer = new EchoServer
+  echoServer ! "hi"
+```
+
+### 更简化的写法
+```
+  import scala.actors.Actor._
+
+  val echoServer = actor {
+    loop {
+      react {
+        case msg => println("echo " + msg)
+      }
+    }
+  }
+  echoServer ! "hi"
+```
+### 复用线程
+```
+  import scala.actors.Actor._
+  import scala.util.Random
+
+  def echoServer(name: String) = actor {
+    loop {
+      react {
+        case msg => println("server" + name + " echo " + msg +
+          " by " + Thread.currentThread())
+      }
+    }
+  }
+
+  val echoServers = (1 to 4).map(x => echoServer(x.toString))
+  (1 to 10).foreach(msg => echoServers(Random.nextInt(4)) ! msg.toString)
+```
+### 返回
+
+修改
+  val version = fromURL !! versionUrl
+  println(version())
+
+```
+  import scala.actors.Actor._
+
+  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
+
+  val fromURL = actor {
+    loop {
+      react {
+        case url: String => reply(scala.io.Source.fromURL(url).getLines().mkString("\n"))
+      }
+    }
+  }
+
+  val version = fromURL !！ versionUrl
+  println(version)
+```
+
+### 自返回
+
+```
+  import scala.actors.Actor._
+  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
+  val fromURL = actor {
+    loop {
+      react {
+        case (url: String, relayer: scala.actors.Actor) =>
+          relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
+      }
+    }
+  }
+  fromURL ! (versionUrl, actor {
+    reactWithin(1000) {
+      case msg: String => println(msg)
+      case TIMEOUT => println("timeout")
+    }
+  })
+```
+
+
+
 ## 实践
 ### 使用Java
 ### 相等性

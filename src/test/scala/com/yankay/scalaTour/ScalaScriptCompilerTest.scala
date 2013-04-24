@@ -1,21 +1,25 @@
 package com.yankay.scalaTour
 
 import java.lang.Boolean
+import scala.actors.TIMEOUT
 
 object ScalaScriptCompilerTest {
-
-  class ScalaCurrentVersion(val url: String) {
-    lazy val source: List[String] = {
-      println("fetching from url...")
-      scala.io.Source.fromURL(url).getLines().toList
+  import scala.actors.Actor._
+  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
+  val fromURL = actor {
+    loop {
+      react {
+        case (url: String, relayer: scala.actors.Actor) =>
+          relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
+      }
     }
-    lazy val majorVersion: Option[String] = source.find(_.contains("version.major"))
-    lazy val minorVersion: Option[String] = source.find(_.contains("version.minor"))
   }
-  val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
-  println("get scala version from " + version.url)
-  version.majorVersion.foreach(println _)
-  version.minorVersion.foreach(println _)
+  fromURL ! (versionUrl, actor {
+    reactWithin(1000) {
+      case msg: String => println(msg)
+      case TIMEOUT => println("timeout")
+    }
+  })
 
 }
 
