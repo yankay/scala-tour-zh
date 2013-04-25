@@ -1,26 +1,32 @@
 package com.yankay.scalaTour
-
 import java.lang.Boolean
-import scala.actors.TIMEOUT
 
 object ScalaScriptCompilerTest {
+  def main(args: Array[String]) {
+  }
   import scala.actors.Actor._
-  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
-  val fromURL = actor {
+  import scala.actors.Actor
+
+  case class Add(v: Int)
+  case class Get(i: Int)
+  case class Sort()
+
+  val concurrentList = actor {
+    val innerList = scala.collection.mutable.LinkedList[Int]()
     loop {
       react {
-        case (url: String, relayer: scala.actors.Actor) =>
-          relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
+        case Add(v) => innerList :: v :: Nil
+        case Get(i) => reply(innerList(i))
+        case Sort => innerList.sortWith(_ < _)
       }
     }
   }
-  fromURL ! (versionUrl, actor {
-    reactWithin(1000) {
-      case msg: String => println(msg)
-      case TIMEOUT => println("timeout")
-    }
-  })
-
+  concurrentList ! Add(3)
+  concurrentList ! Add(1)
+  concurrentList ! Add(2)
+  concurrentList ! Sort()
+  val v = concurrentList !? Get(1)
+  println("get " + v)
 }
 
 

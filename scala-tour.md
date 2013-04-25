@@ -493,6 +493,9 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
   val echoServers = (1 to 4).map(x => echoServer(x.toString))
   (1 to 10).foreach(msg => echoServers(Random.nextInt(4)) ! msg.toString)
 ```
+
+
+
 ### 返回
 
 修改
@@ -512,11 +515,11 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
     }
   }
 
-  val version = fromURL !！ versionUrl
+  val version = fromURL !？ versionUrl
   println(version)
 ```
 
-### 自返回
+### 自返回 
 
 ```
   import scala.actors.Actor._
@@ -536,8 +539,59 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
     }
   })
 ```
+###parallel-collections
 
+```
+  import scala.io.Codec
+  import java.nio.charset.CodingErrorAction
 
+  implicit val codec = Codec("UTF-8")
+  codec.onMalformedInput(CodingErrorAction.REPLACE)
+  codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+
+  val urls = "http://scala-lang.org" :: "https://github.com/yankay/scala-tour" :: Nil
+
+  def fromURL(url: String) = scala.io.Source.fromURL(url).getLines().mkString("\n")
+
+  def time[A](f: => A) = {
+    val s = System.currentTimeMillis()
+    val ret = f
+    println("time: " + (System.currentTimeMillis - s) + "ms")
+    ret
+  }
+
+  time(urls.par.map(fromURL(_)))
+```
+
+### 远程
+```
+ import scala.actors.remote.RemoteActor._
+  import scala.actors.Actor._
+  import scala.actors.remote.Node
+import scala.util.Random
+import java.util.Date
+
+  val port = 5001 + Random.nextInt(65535 - 5001)
+
+  val timeServer = actor {
+    alive(port)
+    register('timeServer, self)
+    loop {
+      react {
+        case msg => {
+          println(msg)
+          reply(System.currentTimeMillis())
+        }
+      }
+    }
+  }
+
+  val timeServerClient = select(Node("127.0.0.1", port), 'timeServer)
+
+  timeServer !? "give me time" match {
+    case time: Long => println(new Date(time))
+  }
+```
 
 ## 实践
 ### 使用Java
