@@ -562,6 +562,16 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 
   time(urls.par.map(fromURL(_)))
 ```
+### 并发wordcount
+```
+  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+
+  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+  
+  val num = file.par.map(wordcount).par.reduceLeft(_ + _)
+
+  println("wordcount:" + num)
+```
 
 ### 远程
 ```
