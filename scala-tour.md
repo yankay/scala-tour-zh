@@ -446,7 +446,12 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 
 ## 并发
 
-### 使用Actor来并发
+### 使用Actor
+
+Actor是Scala的并发模型。Actor是类似线程的实体，有一个邮箱。
+可以通过重载act来执行，react获取邮箱消息，！向邮箱发送消息。
+这个例子是一个EchoServer，接受信息并打印。
+
 ```
   import scala.actors.Actor
 
@@ -464,6 +469,12 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 ```
 
 ### 更简化的写法
+可以通过更简化的办法声明Actor。
+导入scala.actors.Actor.中的actor函数。
+这个函数可以接受一个表达式返回Actor。
+react和一般的函数不同，他不会返回。需要用loop函数来循环调用它。
+
+
 ```
   import scala.actors.Actor._
 
@@ -476,7 +487,12 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
   }
   echoServer ! "hi"
 ```
-### 复用线程
+### Actor原理
+Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor直接可以复用线程。
+这个例子创建4个Actor，每次调用的时候打印自身线程。
+可以发现Actor和线程之间没有任何固定的对应关系。
+一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
+
 ```
   import scala.actors.Actor._
   import scala.util.Random
@@ -496,11 +512,13 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 
 
 
-### 返回
+### 同步返回
 
-修改
-  val version = fromURL !! versionUrl
-  println(version())
+Actor非常适合于较耗时的操作。比如获取网络资源。
+这个例子通过reply返回，通过!?同步发送并获取消息。使用时类似一个函数调用。
+将!?修改为!!，可以返回一个future。future是一个函数，可以调用查看结果。
+将println(version)修改为println(version())
+
 
 ```
   import scala.actors.Actor._
@@ -519,7 +537,11 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
   println(version)
 ```
 
-### 自返回 
+### 异步返回 
+
+异步操作可以最大发挥CPU效能。最佳的办法是在消息中包含需要回调Actor。
+这个例子通过传入一个actor达到异步调用。
+当react不在loop中时，有必要使用reactWithin检测超时。
 
 ```
   import scala.actors.Actor._
@@ -539,7 +561,12 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
     }
   })
 ```
-###parallel-collections
+###并发集合
+
+这个例子是访问若干URL，并记录时间。
+如果能并发访问，就可以大幅提高性能。
+尝试将urls.map修改为urls.par.map。这样每个map中的函数都可以并发执行。
+当函数式和并发结合，就会这样让人兴奋。
 
 ```
   import scala.io.Codec
@@ -553,16 +580,16 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 
   def fromURL(url: String) = scala.io.Source.fromURL(url).getLines().mkString("\n")
 
-  def time[A](f: => A) = {
-    val s = System.currentTimeMillis()
-    val ret = f
-    println("time: " + (System.currentTimeMillis - s) + "ms")
-    ret
-  }
-
-  time(urls.par.map(fromURL(_)))
+   val s = System.currentTimeMillis()
+  time(urls.map(fromURL(_)))
+  println("time: " + (System.currentTimeMillis - s) + "ms")
 ```
+
 ### 并发wordcount
+并发集合支持大部分集合的功能。
+在前面有一个wordcount例子，也可以用并发集合加以实现。
+不增加程序复杂性，却能大幅提高程序利用多核的能力。
+
 ```
   val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
@@ -573,7 +600,11 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
   println("wordcount:" + num)
 ```
 
-### 远程
+### 远程Actor
+Actor是并发模型，也使用于分布式。
+这个例子创建一个时间服务器，通过alive来监听TCP端口，register来注册自己。
+调用时通过select创建client.其余和普通Actor一样。
+
 ```
  import scala.actors.remote.RemoteActor._
   import scala.actors.Actor._
