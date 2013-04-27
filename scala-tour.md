@@ -656,13 +656,45 @@ Apache BeanUtils就可以正常工作。
 ```
 
 ### 相等性
-programming in Scala
+在Scala中==操作等效于equals，这一点和Java不同。更自然一些。
+这个例子定义了一个equals函数，并验证。
+写一个完全正确的equal函数并不容易，这个例子也有子类会不对称的Bug。
+尝试将class修改为case class并删除equals函数。
+case类会自动生成正确的equals函数。
+
+```
+  class Person(val name: String) {
+    override def equals(other: Any) = other match {
+      case that: Person => name.equals(that.name)
+      case _ => false
+    }
+  }
+
+  println(new Person("Black") == new Person("Black"))
+```
+
 
 ### 抽取器
-programming in Scala
-326
-Email
-正则抽取
+抽取器可以帮助pattern match进行解构。
+这个例子是构建一个Email抽取器，只要实现unapply函数就可以了。
+Scala的正则表达式会自带抽取器，可以抽取出一个List。List的元素是匹配()里的表达式。
+抽取器很有用，短短的例子里就有两处使用抽取器：
+case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
+
+```
+  object Email {
+    def apply(user: String, domain: String) = user + "@" + domain
+
+    def unapply(str: String) = new Regex("""(.*)@(.*)""").unapplySeq(str).get match {
+      case user :: domain :: Nil => Some(user, domain)
+      case _ => None
+    }
+  }
+
+  "user@domain.com" match {
+    case Email(user, domain) => println(user + "@" + domain)
+  }
+```
 
 ### 记忆模式
 记忆模式可以解决手动编写存取cache代码的麻烦。
