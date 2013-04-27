@@ -635,16 +635,136 @@ import java.util.Date
 ```
 
 ## 实践
+
 ### 使用Java
+
+Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
+同样Java也可以使用Scala。这个例子演示使用@BeanProperty注解来生成Java Style的Bean。
+尝试将在var name前加上@BeanProperty。这样就给bean添加了getter/setter
+Apache BeanUtils就可以正常工作。
+
+```
+  import org.apache.commons.beanutils.BeanUtils
+  import scala.beans.BeanProperty
+
+  class SimpleBean( var name: String) {
+  }
+
+  val bean = new SimpleBean("foo")
+
+  println(BeanUtils.describe(bean))
+```
+
 ### 相等性
 programming in Scala
 
 ### 抽取器
 programming in Scala
 326
-### Memoization
 Email
-
 正则抽取
 
-#SBT
+### 记忆模式
+记忆模式可以解决手动编写存取cache代码的麻烦。
+这个例子中，memo可以将一个不含cache函数，包装成一个含有cache功能的。
+还是斐波那契的例子，通过cache可以使性能提高。
+尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改fibonacci(n - 1) + fibonacci(n - 2)，可以提高更多。
+
+```
+import scala.collection.mutable.WeakHashMap
+  def memo[X, R](f: X => R) = {
+    val cache = new WeakHashMap[X, R]
+    (x: X) => cache.getOrElseUpdate(x, f(x))
+  }
+
+  def fibonacci_(in: Int): Int = in match {
+    case 0 => 0;
+    case 1 => 1;
+    case n: Int => fibonacci_(n - 1) + fibonacci_(n - 2)
+  }
+
+  val fibonacci: Int => Int = memo(fibonacci_)
+
+  val t1 = System.currentTimeMillis()
+  println(fibonacci(40))
+  println("it takes " + (System.currentTimeMillis() - t1) + "ms")
+
+  val t2 = System.currentTimeMillis()
+  println(fibonacci(40))
+  println("it takes " + (System.currentTimeMillis() - t2) + "ms")
+```
+### 隐式转换
+implicit可以定义一个转换函数，可以在下面的使用到的时候自动转换。
+这个例子可以将String自动转换为Date类型。隐式转换时实现DSL的重要工具。
+
+```
+  implicit def strToDate(str: String) = new SimpleDateFormat("yyyy-MM-dd").parse(str)
+
+  println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
+```
+
+### DSL
+DSL是Scala最强大武器，Scala可以使一些描述性代码变得极为简单。
+这个例子是使用DSL生成JSON。Scala很多看似是语言级的特性也是用DSL做到的。
+自己编写DSL有点复杂，但使用方便灵活的。
+```
+  import org.json4s._
+  import org.json4s.JsonDSL._
+
+  import org.json4s.jackson.JsonMethods._
+
+  case class Twitter(id: Long, text: String, publishedAt: Option[java.util.Date])
+
+  var twitters = Twitter(1, "hello scala", Some(new Date())) :: Twitter(2, "I like scala tour", None) :: Nil
+
+  var json = ("twitters"
+    -> twitters.map(
+      t => ("id" -> t.id)
+        ~ ("text" -> t.text)
+        ~ ("published_at" -> t.publishedAt.toString())))
+
+  println(pretty(render(json)))
+```
+
+### 测试
+Scala DSL可以使测试更方便。
+这个例子是测试一个阶乘函数。使用should/in来建立测试用例。
+测试是默认并发执行的。
+
+```
+  import org.specs2.mutable._
+
+  class FactorialSpec extends Specification {
+    args.report(color = false)
+
+    def factorial(n: Int) = (1 to n).reduce(_ * _)
+
+    "The 'Hello world' string" should {
+      "factorial 3 must be 6" in {
+        factorial(3) mustEqual 6
+      }
+      "factorial 4 must be 6" in {
+        factorial(4) must greaterThan(6)
+      } 
+    }
+  }
+  specs2.run(new FactorialSpec)
+```
+
+
+### Simple Build Tool
+SBT是Scala的最佳编译工具，在他的帮助下，
+你甚至不需要安装除JRE外的任何东西，来开发Scala。
+例如你想在自己的机器上执行这个Scala-Tour
+
+```
+#Linux/Mac:
+git clone https://github.com/yankay/scala-tour-zh.git
+cd scala-tour-zh
+./sbt/sbt run
+
+#Windows
+git clone https://github.com/yankay/scala-tour-zh.git
+cd scala-tour-zh
+sbt\sbt run
+```

@@ -1,32 +1,19 @@
 package com.yankay.scalaTour
-import java.lang.Boolean
+
+import java.util.Date
+import java.text.SimpleDateFormat
 
 object ScalaScriptCompilerTest {
+  // this only handles functions with a single argument.
   def main(args: Array[String]) {
   }
-  import scala.actors.Actor._
-  import scala.actors.Actor
 
-  case class Add(v: Int)
-  case class Get(i: Int)
-  case class Sort()
+  implicit def strToDate(str: String) = new SimpleDateFormat("yyyy-MM-dd").parse(str)
+  implicit def strToLong(str: String) = str.toLong
 
-  val concurrentList = actor {
-    val innerList = scala.collection.mutable.LinkedList[Int]()
-    loop {
-      react {
-        case Add(v) => innerList :: v :: Nil
-        case Get(i) => reply(innerList(i))
-        case Sort => innerList.sortWith(_ < _)
-      }
-    }
-  }
-  concurrentList ! Add(3)
-  concurrentList ! Add(1)
-  concurrentList ! Add(2)
-  concurrentList ! Sort()
-  val v = concurrentList !? Get(1)
-  println("get " + v)
+  println("2013-01-01 unix time: " + "2013-01-01".getTime() / 1000l)
+  println("2013-01-01 unix time: " + ("1" + "1"))
+
 }
 
 
