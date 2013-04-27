@@ -739,6 +739,7 @@ implicit可以定义一个转换函数，可以在下面的使用到的时候自
 DSL是Scala最强大武器，Scala可以使一些描述性代码变得极为简单。
 这个例子是使用DSL生成JSON。Scala很多看似是语言级的特性也是用DSL做到的。
 自己编写DSL有点复杂，但使用方便灵活的。
+
 ```
   import org.json4s._
   import org.json4s.JsonDSL._
