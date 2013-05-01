@@ -23,6 +23,7 @@ import javax.servlet.DispatcherType
 import scala.collection.mutable.WeakHashMap
 
 object Web {
+  val cache = new WeakHashMap[String, RunResponse]
 
   def handler(): Handler = {
     val context = new ServletContextHandler
@@ -112,16 +113,15 @@ class RunServlet extends HttpServlet {
     JsonMethods.pretty(JsonMethods.render(json))
   }
 
-  def memo[X, R](f: X => R) = {
-    val cache = new WeakHashMap[X, R]
-    (x: X) => cache.getOrElseUpdate(x, f(x))
+  def memo(f: String => RunResponse) = {
+    (x: String) => Web.cache.getOrElseUpdate(x, f(x))
   }
   override def doGet(req: HttpServletRequest, resp: HttpServletResponse) = {
     val code = req.getParameter("code")
     if (code == null)
       resp.setStatus(404)
     else {
-      var f=memo(compileAndRun)
+      var f = memo(compileAndRun)
       val model = f(code)
       resp.getWriter().print(json(model))
       resp.getWriter().flush()
