@@ -26,6 +26,7 @@
 	left: 0;
 }
 
+
 .workspace-editor {
 	position: absolute;
 	top: .6em;
@@ -219,4 +220,23 @@ color: #222;
 }
 .onload{
      opacity:0;
+}
+
+.chapter {
+	cursor: pointer;
+}
+.chapter h2{
+	font-size: 160px;
+}
+
+.chapter .btn-primary{
+	margin-left: 400px;
+	margin-top: 50px;
+}
+
+.step-nav{
+	position: absolute;
+	top: 90%;
+	bottom: 0;
+	right: 0;
 }

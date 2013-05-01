@@ -29,7 +29,7 @@
                             <a href="#/glance">概览</a>
                         </li>
                         <li class="">
-                            <a href="#/about">About</a>
+                            <a href="#/about">关于</a>
                         </li>
                     </ul><a class="lang" href="http://zh.scala-tour.com/" title="中文">中文</a> <a class="lang" href="http://www.scala-tour.com/" title="English">English</a>
                 </div>
@@ -49,8 +49,10 @@
                     <span class="scala-red">Scala</span> 指南
                 </h1>
                 <p>
-                    Explore the Scala programming lanaguage.
-                </p>
+                    开始精彩的Scala旅程
+                </p>     <div class="step-nav">
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
             </div>
             <div id="hello-wolrd" class="step slide" data-x="-2000" data-y="-2000">
                 <div class="row-fluid">
@@ -78,30 +80,32 @@ println("hello world")
                             Hello World
                         </h2>
                         <p>
-                            <b>Scala</b> is a popular <b>functional</b>/<b>object-oriented</b> programming language built on top of the <b>Java virtual machine (JVM)</b>.
+                            <b>Scala</b> 是一门 <b>函数式</b>的<b>面向对象</b>语言。他运行在<b>Java虚拟机</b>上.
                         </p>
                         <p>
-                            The tour will help you to know the prowerful features about Scala.And you could learn how to use them effectively through experimentation.
+                            本指南是用来介绍Scala强大的功能。同时你可以亲身实践他们。
                         </p>
                         <p>
-                            The tour is interactive. Click the <b>Run</b> button now to compile and run the program on a remote server. The result is displayed below the code. You can edit it and run your own code.
+                            点击左边的<b>Run</b>按钮试试。左边的运行框可以在远程编译和运行任何Scala代码。运行的结果将展示在下面对文本框中。你也可以试着编辑这些代码，重新运行。(初次运行可能会有些慢，不过第二次就很快了)
                         </p>
                         <p>
-                            Use a spacebar or arrow keys to navigate
+                            使用方向键或者空格来翻页
                         </p>
-                        <p>
-                            <b>Ready? Go</b>
-                        </p>
+                         <div class="step-nav">
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="glance" class="step" data-x="0" data-y="0" data-scale="8"></div>
             <div id="basics" class="step" data-x="0" data-y="-2000" data-scale="2">
-                <h2 style="font-size: 200px;">
-                    基本
-                </h2>
+                <div class="chapter">
+                    <h2>
+                        基本
+                    </h2><a class="btn btn-primary btn-large" href="#/expression-and-values" >进入</a>
+                </div>
             </div>
-            <div class="step slide deeply" data-x="-2000" data-y="-2000" data-z="-3000">
+            <div id="expression-and-values" class="step slide deeply" data-x="-2000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -137,6 +141,11 @@ println(helloWorld)
                         <p>
                             可以通过val定义一个常量，亦可以通过var定义一个变量。推荐多使用常量。
                         </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +195,11 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
                         </p>
                         <p>
                             函数还可以像值一样，赋值给var或val。因此他也可以作为参数传给另一个函数。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -239,7 +252,11 @@ withScanner(File("/proc/self/stat"),
                         </p>
                         <p>
                             注：当表达式没有返回值时，默认返回Unit。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -286,7 +303,11 @@ log(MSG + 1 / 0)
                         </p>
                         <p>
                             按名称传递参数可以减少不必要的计算和异常。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -349,7 +370,11 @@ println("age: " + obama.age())
                         </p>
                         <p>
                             obama.age()的函数调用，可以省略小括号，简化为obama.age。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -400,7 +425,11 @@ withClose(conn, conn =&gt;
                         </p>
                         <p>
                             不必使用继承这种不够灵活的特性。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -463,7 +492,11 @@ withClose(conn)(conn =&gt;
                         </p>
                         <p>
                             是否和java中的synchronized关键字用法很像？
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -521,7 +554,11 @@ println(msg)
                         </p>
                         <p>
                             虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -581,11 +618,13 @@ println("Json: " + list.toString())
                 </div>
             </div>
             <div id="advanced" class="step" data-x="-3000" data-y="0" data-scale="2">
-                <h2 style="font-size: 200px;">
-                    函数式编程
-                </h2>
+                <div class="chapter">
+                    <h2>
+                        函数式
+                    </h2><a class="btn btn-primary btn-large" href="#/pattern-match">进入</a>
+                </div>
             </div>
-            <div class="step slide deeply" data-x="-2000" data-y="-500" data-z="-3000">
+            <div id="pattern-match" class="step slide deeply" data-x="-2000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -637,7 +676,11 @@ println(fibonacci(3))
                         </p>
                         <p>
                             在最后添加 println(fibonacci(-3))；println(fibonacci("3"))；来检查刚刚修改的效果。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -695,7 +738,11 @@ println(value(FibonacciExpr(3)))
                         </p>
                         <p>
                             由于使用了require(n &gt;= 0)来检验参数，尝试使用负数，会抛出异常。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -747,7 +794,11 @@ println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
                         </p>
                         <p>
                             相比于Ruby等动态语言,这威力来自于科学而不是魔法
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -793,7 +844,11 @@ println("cat file | grep 'warn' | grep '2013' | wc : "
                         </p>
                         <p>
                             这个例子是用函数式的代码模拟“cat file | grep 'warn' | grep '2013' | wc”的行为。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -845,7 +900,11 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更清晰
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -895,7 +954,11 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             尾递归会在编译期优化，因此不用担心一般递归造成的栈溢出问题。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -942,7 +1005,11 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             这个例子是使用for循环代替map函数。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1000,7 +1067,11 @@ println(osName.getOrElse("none"))
                         </p>
                         <p>
                             尝试在最后添加 osName.foreach(print _) 。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1056,11 +1127,13 @@ version.minorVersion.foreach(println _)
                 </div>
             </div>
             <div id="concurrency" class="step" data-x="0" data-y="2000" data-scale="2">
-                <h2 style="font-size: 200px;">
-                    并发
-                </h2>
+                <div class="chapter">
+                    <h2>
+                        并发
+                    </h2><a class="btn btn-primary btn-large" href="#/using-actor">进入</a>
+                </div>
             </div>
-            <div class="step slide deeply" data-x="-2000" data-y="1000" data-z="-3000">
+            <div id="using-actor" class="step slide deeply" data-x="-2000" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1105,7 +1178,11 @@ echoServer ! "hi"
                         </p>
                         <p>
                             这个例子是一个EchoServer，接受信息并打印。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1154,7 +1231,11 @@ echoServer ! "hi"
                         </p>
                         <p>
                             react和一般的函数不同，他不会返回。需要用loop函数来循环调用它。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1207,7 +1288,11 @@ val echoServers = (1 to 4).map(x =&gt; echoServer(x.toString))
                         </p>
                         <p>
                             一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1260,7 +1345,11 @@ println(version)
                         </p>
                         <p>
                             将println(version)修改为println(version())
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1312,7 +1401,11 @@ fromURL ! (versionUrl, actor {
                         </p>
                         <p>
                             当react不在loop中时，有必要使用reactWithin检测超时。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1358,7 +1451,11 @@ println("time: " + (System.currentTimeMillis - s) + "ms")
                         </p>
                         <p>
                             当函数式和并发结合，就会这样让人兴奋。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1404,7 +1501,11 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             不增加程序复杂性，却能大幅提高程序利用多核的能力。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1471,11 +1572,13 @@ timeServer !? "give me time" match {
                 </div>
             </div>
             <div id="practice" class="step" data-x="3000" data-y="0" data-scale="2">
-                <h2 style="font-size: 200px;">
-                    实践
-                </h2>
+                <div class="chapter">
+                    <h2>
+                        实践
+                    </h2><a class="btn btn-primary btn-large" href="#/using-java">进入</a>
+                </div>
             </div>
-            <div class="step slide deeply" data-x="-2000" data-y="2500" data-z="-3000">
+            <div id="using-java" class="step slide deeply" data-x="-2000" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1519,7 +1622,11 @@ println(BeanUtils.describe(bean))
                         </p>
                         <p>
                             Apache BeanUtils就可以正常工作。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1572,7 +1679,11 @@ println(new Person("Black") == new Person("Black"))
                         </p>
                         <p>
                             case类会自动生成正确的equals函数。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1629,7 +1740,11 @@ object Email {
                         </p>
                         <p>
                             case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1692,7 +1807,11 @@ println("it takes " + (System.currentTimeMillis() - t2) + "ms")
                         </p>
                         <p>
                             尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改fibonacci(n - 1) + fibonacci(n - 2)，可以提高更多。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1728,7 +1847,11 @@ println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
                         </p>
                         <p>
                             这个例子可以将String自动转换为Date类型。隐式转换时实现DSL的重要工具。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1780,7 +1903,11 @@ println(pretty(render(json)))
                         </p>
                         <p>
                             自己编写DSL有点复杂，但使用方便灵活的。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1833,7 +1960,11 @@ specs2.run(new FactorialSpec)
                         </p>
                         <p>
                             测试是默认并发执行的。
-                        </p>
+                        </p>                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
+                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1884,7 +2015,7 @@ sbt\sbt run
             </div>
             <div id="about" class="step" data-x="3750" data-y="2500" data-scale="1">
                 <h2>
-                    About
+                    关于
                 </h2>
             </div>
         </div>
@@ -1897,7 +2028,9 @@ if ("ontouchstart" in document.documentElement) {
         document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate<\/p>";
         }
         </script> <script src="js/jquery.min.js">
-</script> <script src="js/impress.js">
+</script>
+
+ <script src="js/impress.js">
 </script> <script src="js/bootstrap.js">
 </script> <script>
 document.getElementById("body").className=document.getElementById("body").className.replace('onload',' ');

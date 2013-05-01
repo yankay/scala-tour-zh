@@ -106,3 +106,12 @@ $(window).load(function() {
   }
 
 });
+
+$(".pre-step").mouseup(function(){
+   var api = impress();
+   api.prev();
+})
+$(".next-step").mouseup(function(){
+   var api = impress();
+   api.next();
+})
