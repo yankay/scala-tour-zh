@@ -56,20 +56,20 @@ withScanner封装了try-finally块，所以调用者不用再close。
 注：当表达式没有返回值时，默认返回Unit。
 
 ```
-	import scala.reflect.io.File
-	import java.util.Scanner
+import scala.reflect.io.File
+import java.util.Scanner
 
-	def withScanner(f: File, op: Scanner => Unit) = {
-		val scanner = new Scanner(f.bufferedReader)
-		try {
-			op(scanner)
-		} finally {
-			scanner.close()
-		}
+def withScanner(f: File, op: Scanner => Unit) = {
+	val scanner = new Scanner(f.bufferedReader)
+	try {
+		op(scanner)
+	} finally {
+		scanner.close()
 	}
+}
 
-	withScanner(File("/proc/self/stat"),
-		scanner => println("pid is " + scanner.next()))
+withScanner(File("/proc/self/stat"),
+	scanner => println("pid is " + scanner.next()))
 ```
 
 
@@ -87,14 +87,14 @@ withScanner封装了try-finally块，所以调用者不用再close。
 
 
 ```
-	val logEnable = false
+val logEnable = false
 
-	def log(msg: String) =
-		if (logEnable) println(msg)
+def log(msg: String) =
+	if (logEnable) println(msg)
 
-	val MSG = "programing is running"
+val MSG = "programing is running"
 
-	log(MSG + 1 / 0)
+log(MSG + 1 / 0)
 ```
 
 ### 类定义
@@ -107,24 +107,24 @@ withScanner封装了try-finally块，所以调用者不用再close。
 obama.age()的函数调用，可以省略小括号，简化为obama.age。
 
 ```
-	class Persion(val firstName: String, val lastName: String) {
+class Persion(val firstName: String, val lastName: String) {
 
-		private var _age = 0
-		def age = _age
-		def age_=(newAge: Int) = _age = newAge
+	private var _age = 0
+	def age = _age
+	def age_=(newAge: Int) = _age = newAge
 
-		def fullName() = firstName + " " + lastName
+	def fullName() = firstName + " " + lastName
 
-		override def toString() = fullName()
-	}
+	override def toString() = fullName()
+}
 
-	val obama: Persion = new Persion("Barack", "Obama")
+val obama: Persion = new Persion("Barack", "Obama")
 
-	println("Persion: " + obama)
-	println("firstName: " + obama.firstName)
-	println("lastName: " + obama.lastName)
-	obama.age_=(51)
-	println("age: " + obama.age())
+println("Persion: " + obama)
+println("firstName: " + obama.firstName)
+println("lastName: " + obama.lastName)
+obama.age_=(51)
+println("age: " + obama.age())
 ```
 
 
@@ -135,21 +135,21 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
 不必使用继承这种不够灵活的特性。
 
 ```
-	def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
-		try {
-			op(closeAble)
-		} finally {
-			closeAble.close()
-		}
+def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
+	try {
+		op(closeAble)
+	} finally {
+		closeAble.close()
 	}
+}
 
-	class Connection {
-		def close() = println("close Connection")
-	}
+class Connection {
+	def close() = println("close Connection")
+}
 
-	val conn: Connection = new Connection()
-	withClose(conn, conn =>
-		println("do something with Connection"))
+val conn: Connection = new Connection()
+withClose(conn, conn =>
+	println("do something with Connection"))
 ```
 
 
@@ -164,21 +164,21 @@ def add(x:Int)(y:Int) = x + y 是上面的简化写法
 是否和java中的synchronized关键字用法很像？
 
 ```
-	def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
-		try {
-			op(closeAble)
-		} finally {
-			closeAble.close()
-		}
+def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
+	try {
+		op(closeAble)
+	} finally {
+		closeAble.close()
 	}
+}
 
-	class Connection {
-		def close() = println("close Connection")
-	}
+class Connection {
+	def close() = println("close Connection")
+}
 
-	val conn: Connection = new Connection()
-	withClose(conn)(conn =>
-		println("do something with Connection"))
+val conn: Connection = new Connection()
+withClose(conn)(conn =>
+	println("do something with Connection"))
 ```
 
 
@@ -189,28 +189,28 @@ def add(x:Int)(y:Int) = x + y 是上面的简化写法
 虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
 
 ```
-	def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
-		try {
-			op(closeAble)
-		} finally {
-			closeAble.close()
-		}
+def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
+	try {
+		op(closeAble)
+	} finally {
+		closeAble.close()
 	}
+}
 
-	class Connection {
-		val msg = "123456"
-		def close() = println("close Connection")
-	}
+class Connection {
+	val msg = "123456"
+	def close() = println("close Connection")
+}
 
-	val conn: Connection = new Connection()
-	val msg = withClose(conn) { conn =>
-		{
-			println("do something with Connection")
-			conn.msg
-		}
+val conn: Connection = new Connection()
+val msg = withClose(conn) { conn =>
+	{
+		println("do something with Connection")
+		conn.msg
 	}
+}
 	
-	println(msg)
+println(msg)
 ```
 
 ### Traits
@@ -220,31 +220,31 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 试着再在后面加上with JsonAble，给list添加toJson的能力
 
 ```
-	trait ForEachAble[A] {
-		def iterator: java.util.Iterator[A]
-		def foreach(f: A => Unit) = {
-			val iter = iterator
-			while (iter.hasNext)
-				f(iter.next)
-		}
+trait ForEachAble[A] {
+	def iterator: java.util.Iterator[A]
+	def foreach(f: A => Unit) = {
+		val iter = iterator
+		while (iter.hasNext)
+			f(iter.next)
 	}
+}
 
-	trait JsonAble {
-		override def toString() =
-			scala.util.parsing.json.JSONFormat.defaultFormatter(this)
-	}
+trait JsonAble {
+	override def toString() =
+		scala.util.parsing.json.JSONFormat.defaultFormatter(this)
+}
 
-	val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
-	list.add(1); list.add(2)
+val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
+list.add(1); list.add(2)
 
-	list.foreach(x => println(x))
-	println("Json: " + list.toString())
+list.foreach(x => println(x))
+println("Json: " + list.toString())
 ```
 
 
 ## 函数式编程
 
-### Pattern Matching
+### 模式匹配
 
 模式匹配是类似switch-case特性，但更加灵活；也类似if-else，但更加简约。
 这个例子展示的使用用模式匹配实现斐波那契。
@@ -256,14 +256,14 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 
 
 ```
-	def fibonacci(in: Any): Int = in match {
-		case 0 => 0
-		case 1 => 1
-		case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
-		case _ => 0
-	}
+def fibonacci(in: Any): Int = in match {
+	case 0 => 0
+	case 1 => 1
+	case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
+	case _ => 0
+}
 
-	println(fibonacci(3))
+println(fibonacci(3))
 ```
 
 ### Case Class
@@ -276,22 +276,22 @@ case class 顾名思义就是为case语句专门设计的类。
 
 
 ```
-  abstract class Expr
+abstract class Expr
 
-  case class FibonacciExpr(n: Int) extends Expr {
-    require(n >= 0)
-  }
+case class FibonacciExpr(n: Int) extends Expr {
+  require(n >= 0)
+}
 
-  case class SumExpr(a: Expr, b: Expr) extends Expr
+case class SumExpr(a: Expr, b: Expr) extends Expr
 
-  def value(in: Expr): Int = in match {
-    case FibonacciExpr(0) => 0
-    case FibonacciExpr(1) => 1
-    case FibonacciExpr(n) => value(SumExpr(FibonacciExpr(n - 1), FibonacciExpr(n - 2)))
-    case SumExpr(a, b) => value(a) + value(b)
-    case _ => 0
-  }
-  println(value(FibonacciExpr(3)))
+def value(in: Expr): Int = in match {
+  case FibonacciExpr(0) => 0
+  case FibonacciExpr(1) => 1
+  case FibonacciExpr(n) => value(SumExpr(FibonacciExpr(n - 1), FibonacciExpr(n - 2)))
+  case SumExpr(a, b) => value(a) + value(b)
+  case _ => 0
+}
+println(value(FibonacciExpr(3)))
 ```
 
 ### 函数式的威力
@@ -302,19 +302,19 @@ case class 顾名思义就是为case语句专门设计的类。
 相比于Ruby等动态语言,这威力来自于科学而不是魔法
 
 ```
-  val list = List(1, 2, 3, 4)
+val list = List(1, 2, 3, 4)
 
-  def containsOdd(list: List[Int]): Boolean = {
-    for (i <- list) {
-      if (i % 2 == 1)
-        return true;
-    }
-    return false;
+def containsOdd(list: List[Int]): Boolean = {
+  for (i <- list) {
+    if (i % 2 == 1)
+      return true;
   }
+  return false;
+}
 
-  println("list containsOdd by for loop:" + containsOdd(list))
+println("list containsOdd by for loop:" + containsOdd(list))
 
-  println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
+println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
 ```
 
 ### 函数式真正的威力
@@ -326,10 +326,10 @@ List的filter方法接受一个过滤函数，返回一个新的List
 这个例子是用函数式的代码模拟“cat file | grep 'warn' | grep '2013' | wc”的行为。
 
 ```
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
-  println("cat file | grep 'warn' | grep '2013' | wc : " 
-      + file.filter(_.contains("warn")).filter(_.contains("2013")).size)
+println("cat file | grep 'warn' | grep '2013' | wc : " 
+    + file.filter(_.contains("warn")).filter(_.contains("2013")).size)
 ```
 ### Word Count
 Word Count是一个MapReduce的一个经典示例。巧合的是，使用函数式的编程法，用类似MapReduce的方法实现word count也是最直观的。
@@ -340,13 +340,13 @@ List的reduceLeft方法接受一个合并函数，依次遍历合并。第一个
 Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更清晰
 
 ```
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
-  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+def wordcount(str: String): Int = str.split(" ").count("msg" == _)
   
-  val num = file.map(wordcount).reduceLeft(_ + _)
+val num = file.map(wordcount).reduceLeft(_ + _)
 
-  println("wordcount:" + num)
+println("wordcount:" + num)
 ```
 ### 尾递归
 
@@ -355,40 +355,40 @@ Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更
 尾递归会在编译期优化，因此不用担心一般递归造成的栈溢出问题。
 
 ```
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
-  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
-  def foldLeft(list: List[Int])(init: Int)(f: (Int, Int) => Int): Int = {
-    list match {
-      case List() => init
-      case head :: tail => foldLeft(tail)(f(init, head))(f)
-    }
+def foldLeft(list: List[Int])(init: Int)(f: (Int, Int) => Int): Int = {
+  list match {
+    case List() => init
+    case head :: tail => foldLeft(tail)(f(init, head))(f)
   }
+}
 
-  val num = foldLeft(file.map(wordcount))(0)(_ + _)
+val num = foldLeft(file.map(wordcount))(0)(_ + _)
 
-  println("wordcount:" + num)
+println("wordcount:" + num)
 ```
 
 ### 更强大的For
 
-循环语句是过程式编程的特产，Scala对其加以改进，成为适应函数式风格的利器。
+循环语句是指令式编程的特产，Scala对其加以改进，成为适应函数式风格的利器。
 For循环也是有返回值的，其返回是一个List。在每一轮迭代中加入yield，yield后的值可以加入到List中。
 这个例子是使用for循环代替map函数。
 
 ```
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
-  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
+def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
-  val counts =
-    for (line <- file)
-      yield wordcount(line)
+val counts =
+  for (line <- file)
+    yield wordcount(line)
 
-  val num = counts.reduceLeft(_ + _)
+val num = counts.reduceLeft(_ + _)
 
-  println("wordcount:" + num)
+println("wordcount:" + num)
 ```
 ### Option
 
@@ -402,19 +402,19 @@ NullException是Java中最常见的异常，要想避免他只有不断检查nul
 
 ```
 
-  def getProperty(name: String): Option[String] = {
-    val value = System.getProperty(name)
-    if (value != null) Some(value) else None
-  }
+def getProperty(name: String): Option[String] = {
+  val value = System.getProperty(name)
+  if (value != null) Some(value) else None
+}
 
-  val osName = getProperty("os.name")
+val osName = getProperty("os.name")
 
-  osName match {
-    case Some(value) => println(value)
-    case _ => println("none")
-  }
+osName match {
+  case Some(value) => println(value)
+  case _ => println("none")
+}
 
-  println(osName.getOrElse("none"))
+println(osName.getOrElse("none"))
 
   
 
@@ -429,18 +429,18 @@ Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初
 可以使用lazy来延迟获取。
 
 ```
-  class ScalaCurrentVersion(val url: String) {
-    lazy val source= {
-      println("fetching from url...")
-      scala.io.Source.fromURL(url).getLines().toList
-    }
-    lazy val majorVersion = source.find(_.contains("version.major"))
-    lazy val minorVersion = source.find(_.contains("version.minor"))
+class ScalaCurrentVersion(val url: String) {
+  lazy val source= {
+    println("fetching from url...")
+    scala.io.Source.fromURL(url).getLines().toList
   }
-  val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
-  println("get scala version from " + version.url)
-  version.majorVersion.foreach(println _)
-  version.minorVersion.foreach(println _)
+  lazy val majorVersion = source.find(_.contains("version.major"))
+  lazy val minorVersion = source.find(_.contains("version.minor"))
+}
+val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
+println("get scala version from " + version.url)
+version.majorVersion.foreach(println _)
+version.minorVersion.foreach(println _)
 ```
 
 
