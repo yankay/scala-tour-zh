@@ -100,7 +100,8 @@ $(window).load(function() {
       tabSize: 2,
       indentWithTabs: false,
       mode: "text/x-scala",
-      smartIndent :false
+      smartIndent :false,
+      lineNumbers: false
     });
     editors[i] = editor
   }
