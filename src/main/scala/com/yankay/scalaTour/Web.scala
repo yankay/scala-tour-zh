@@ -86,7 +86,7 @@ class RunServlet extends HttpServlet {
         val existValue = pid.exitValue()
         timeout ! existValue
         val outEvents = new String(out.toByteArray()).lines.toList
-        val errEvents = new String(err.toByteArray()).lines.toList
+        val errEvents = new String(err.toByteArray()).lines.toList.filterNot(_.startsWith("Picked up JAVA_TOOL_OPTIONS"))
         existValue match {
           case 0 => (outEvents, errEvents)
           case x => (outEvents, errEvents ::: List("exit value is " + x))
