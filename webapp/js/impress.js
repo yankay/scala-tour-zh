@@ -779,13 +779,30 @@
             if ( api.goto(target) ) {
                 event.stopImmediatePropagation();
                 event.preventDefault();
-            }
+            }            
         }, false);
         
         // delegated handler for clicking on step elements
         document.addEventListener("click", function ( event ) {
             var target = event.target;
             // find closest step element that is not active
+// $(".pre-step").mouseup(function(){
+//    var api = impress();
+//    api.prev();
+// })
+// $(".next-step").mouseup(function(){
+//    var api = impress();
+//    api.next();
+// })
+            if(target.classList.contains("pre-step")){
+                api.prev();
+                return
+            }
+            if(target.classList.contains("next-step")){
+                api.next();
+                return
+            }
+
             while ( !(target.classList.contains("step") && !target.classList.contains("active")) &&
                     (target !== document.documentElement) ) {
                 target = target.parentNode;
