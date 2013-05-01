@@ -453,19 +453,19 @@ Actor是Scala的并发模型。Actor是类似线程的实体，有一个邮箱�
 这个例子是一个EchoServer，接受信息并打印。
 
 ```
-  import scala.actors.Actor
+import scala.actors.Actor
 
-  class EchoServer extends Actor {
-    def act = loop {
-      react {
-        case msg => println("echo " + msg)
-      }
+class EchoServer extends Actor {
+  def act = loop {
+    react {
+      case msg => println("echo " + msg)
     }
-    start
   }
+  start
+}
 
-  val echoServer = new EchoServer
-  echoServer ! "hi"
+val echoServer = new EchoServer
+echoServer ! "hi"
 ```
 
 ### 更简化的写法
@@ -476,16 +476,16 @@ react和一般的函数不同，他不会返回。需要用loop函数来循环�
 
 
 ```
-  import scala.actors.Actor._
+import scala.actors.Actor._
 
-  val echoServer = actor {
-    loop {
-      react {
-        case msg => println("echo " + msg)
-      }
+val echoServer = actor {
+  loop {
+    react {
+      case msg => println("echo " + msg)
     }
   }
-  echoServer ! "hi"
+}
+echoServer ! "hi"
 ```
 ### Actor原理
 Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor直接可以复用线程。
@@ -494,20 +494,20 @@ Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘�
 一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
 
 ```
-  import scala.actors.Actor._
-  import scala.util.Random
+import scala.actors.Actor._
+import scala.util.Random
 
-  def echoServer(name: String) = actor {
-    loop {
-      react {
-        case msg => println("server" + name + " echo " + msg +
-          " by " + Thread.currentThread())
-      }
+def echoServer(name: String) = actor {
+  loop {
+    react {
+      case msg => println("server" + name + " echo " + msg +
+        " by " + Thread.currentThread())
     }
   }
+}
 
-  val echoServers = (1 to 4).map(x => echoServer(x.toString))
-  (1 to 10).foreach(msg => echoServers(Random.nextInt(4)) ! msg.toString)
+val echoServers = (1 to 4).map(x => echoServer(x.toString))
+(1 to 10).foreach(msg => echoServers(Random.nextInt(4)) ! msg.toString)
 ```
 
 
@@ -521,20 +521,20 @@ Actor非常适合于较耗时的操作。比如获取网络资源。
 
 
 ```
-  import scala.actors.Actor._
+import scala.actors.Actor._
 
-  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
+val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
 
-  val fromURL = actor {
-    loop {
-      react {
-        case url: String => reply(scala.io.Source.fromURL(url).getLines().mkString("\n"))
-      }
+val fromURL = actor {
+  loop {
+    react {
+      case url: String => reply(scala.io.Source.fromURL(url).getLines().mkString("\n"))
     }
   }
+}
 
-  val version = fromURL !？ versionUrl
-  println(version)
+val version = fromURL !？ versionUrl
+println(version)
 ```
 
 ### 异步返回 
@@ -544,22 +544,22 @@ Actor非常适合于较耗时的操作。比如获取网络资源。
 当react不在loop中时，有必要使用reactWithin检测超时。
 
 ```
-  import scala.actors.Actor._
-  val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
-  val fromURL = actor {
-    loop {
-      react {
-        case (url: String, relayer: scala.actors.Actor) =>
-          relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
-      }
+import scala.actors.Actor._
+val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
+val fromURL = actor {
+  loop {
+    react {
+      case (url: String, relayer: scala.actors.Actor) =>
+        relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
     }
   }
-  fromURL ! (versionUrl, actor {
-    reactWithin(1000) {
-      case msg: String => println(msg)
-      case TIMEOUT => println("timeout")
-    }
-  })
+}
+fromURL ! (versionUrl, actor {
+  reactWithin(1000) {
+    case msg: String => println(msg)
+    case TIMEOUT => println("timeout")
+  }
+})
 ```
 ###并发集合
 
@@ -569,20 +569,20 @@ Actor非常适合于较耗时的操作。比如获取网络资源。
 当函数式和并发结合，就会这样让人兴奋。
 
 ```
-  import scala.io.Codec
-  import java.nio.charset.CodingErrorAction
+import scala.io.Codec
+import java.nio.charset.CodingErrorAction
 
-  implicit val codec = Codec("UTF-8")
-  codec.onMalformedInput(CodingErrorAction.REPLACE)
-  codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+implicit val codec = Codec("UTF-8")
+codec.onMalformedInput(CodingErrorAction.REPLACE)
+codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
-  val urls = "http://scala-lang.org" :: "https://github.com/yankay/scala-tour" :: Nil
+val urls = "http://scala-lang.org" :: "https://github.com/yankay/scala-tour" :: Nil
 
-  def fromURL(url: String) = scala.io.Source.fromURL(url).getLines().mkString("\n")
+def fromURL(url: String) = scala.io.Source.fromURL(url).getLines().mkString("\n")
 
-   val s = System.currentTimeMillis()
-  time(urls.map(fromURL(_)))
-  println("time: " + (System.currentTimeMillis - s) + "ms")
+val s = System.currentTimeMillis()
+time(urls.map(fromURL(_)))
+println("time: " + (System.currentTimeMillis - s) + "ms")
 ```
 
 ### 并发wordcount
@@ -591,13 +591,13 @@ Actor非常适合于较耗时的操作。比如获取网络资源。
 不增加程序复杂性，却能大幅提高程序利用多核的能力。
 
 ```
-  val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
 
-  def wordcount(str: String): Int = str.split(" ").count("msg" == _)
-  
-  val num = file.par.map(wordcount).par.reduceLeft(_ + _)
+def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
-  println("wordcount:" + num)
+val num = file.par.map(wordcount).par.reduceLeft(_ + _)
+
+println("wordcount:" + num)
 ```
 
 ### 远程Actor
@@ -606,32 +606,32 @@ Actor是并发模型，也使用于分布式。
 调用时通过select创建client.其余和普通Actor一样。
 
 ```
- import scala.actors.remote.RemoteActor._
-  import scala.actors.Actor._
-  import scala.actors.remote.Node
+import scala.actors.remote.RemoteActor._
+import scala.actors.Actor._
+import scala.actors.remote.Node
 import scala.util.Random
 import java.util.Date
 
-  val port = 5001 + Random.nextInt(65535 - 5001)
+val port = 5001 + Random.nextInt(65535 - 5001)
 
-  val timeServer = actor {
-    alive(port)
-    register('timeServer, self)
-    loop {
-      react {
-        case msg => {
-          println(msg)
-          reply(System.currentTimeMillis())
-        }
+val timeServer = actor {
+  alive(port)
+  register('timeServer, self)
+  loop {
+    react {
+      case msg => {
+        println(msg)
+        reply(System.currentTimeMillis())
       }
     }
   }
+}
 
-  val timeServerClient = select(Node("127.0.0.1", port), 'timeServer)
+val timeServerClient = select(Node("127.0.0.1", port), 'timeServer)
 
-  timeServer !? "give me time" match {
-    case time: Long => println(new Date(time))
-  }
+timeServer !? "give me time" match {
+  case time: Long => println(new Date(time))
+}
 ```
 
 ## 实践
@@ -644,15 +644,15 @@ Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java
 Apache BeanUtils就可以正常工作。
 
 ```
-  import org.apache.commons.beanutils.BeanUtils
-  import scala.beans.BeanProperty
+import org.apache.commons.beanutils.BeanUtils
+import scala.beans.BeanProperty
 
-  class SimpleBean( var name: String) {
-  }
+class SimpleBean( var name: String) {
+}
 
-  val bean = new SimpleBean("foo")
+val bean = new SimpleBean("foo")
 
-  println(BeanUtils.describe(bean))
+println(BeanUtils.describe(bean))
 ```
 
 ### 相等性
@@ -663,14 +663,14 @@ Apache BeanUtils就可以正常工作。
 case类会自动生成正确的equals函数。
 
 ```
-  class Person(val name: String) {
-    override def equals(other: Any) = other match {
-      case that: Person => name.equals(that.name)
-      case _ => false
-    }
+class Person(val name: String) {
+  override def equals(other: Any) = other match {
+    case that: Person => name.equals(that.name)
+    case _ => false
   }
+}
 
-  println(new Person("Black") == new Person("Black"))
+println(new Person("Black") == new Person("Black"))
 ```
 
 
@@ -682,18 +682,18 @@ Scala的正则表达式会自带抽取器，可以抽取出一个List。List的�
 case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
 
 ```
-  object Email {
-    def apply(user: String, domain: String) = user + "@" + domain
+object Email {
+  def apply(user: String, domain: String) = user + "@" + domain
 
-    def unapply(str: String) = new Regex("""(.*)@(.*)""").unapplySeq(str).get match {
-      case user :: domain :: Nil => Some(user, domain)
-      case _ => None
-    }
+  def unapply(str: String) = new Regex("""(.*)@(.*)""").unapplySeq(str).get match {
+    case user :: domain :: Nil => Some(user, domain)
+    case _ => None
   }
+}
 
-  "user@domain.com" match {
-    case Email(user, domain) => println(user + "@" + domain)
-  }
+"user@domain.com" match {
+  case Email(user, domain) => println(user + "@" + domain)
+}
 ```
 
 ### 记忆模式
@@ -704,26 +704,26 @@ case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
 
 ```
 import scala.collection.mutable.WeakHashMap
-  def memo[X, R](f: X => R) = {
-    val cache = new WeakHashMap[X, R]
-    (x: X) => cache.getOrElseUpdate(x, f(x))
-  }
+def memo[X, R](f: X => R) = {
+  val cache = new WeakHashMap[X, R]
+  (x: X) => cache.getOrElseUpdate(x, f(x))
+}
 
-  def fibonacci_(in: Int): Int = in match {
-    case 0 => 0;
-    case 1 => 1;
-    case n: Int => fibonacci_(n - 1) + fibonacci_(n - 2)
-  }
+def fibonacci_(in: Int): Int = in match {
+  case 0 => 0;
+  case 1 => 1;
+  case n: Int => fibonacci_(n - 1) + fibonacci_(n - 2)
+}
 
-  val fibonacci: Int => Int = memo(fibonacci_)
+val fibonacci: Int => Int = memo(fibonacci_)
 
-  val t1 = System.currentTimeMillis()
-  println(fibonacci(40))
-  println("it takes " + (System.currentTimeMillis() - t1) + "ms")
+val t1 = System.currentTimeMillis()
+println(fibonacci(40))
+println("it takes " + (System.currentTimeMillis() - t1) + "ms")
 
-  val t2 = System.currentTimeMillis()
-  println(fibonacci(40))
-  println("it takes " + (System.currentTimeMillis() - t2) + "ms")
+val t2 = System.currentTimeMillis()
+println(fibonacci(40))
+println("it takes " + (System.currentTimeMillis() - t2) + "ms")
 ```
 ### 隐式转换
 implicit可以定义一个转换函数，可以在下面的使用到的时候自动转换。
@@ -741,22 +741,22 @@ DSL是Scala最强大武器，Scala可以使一些描述性代码变得极为简�
 自己编写DSL有点复杂，但使用方便灵活的。
 
 ```
-  import org.json4s._
-  import org.json4s.JsonDSL._
+import org.json4s._
+import org.json4s.JsonDSL._
 
-  import org.json4s.jackson.JsonMethods._
+import org.json4s.jackson.JsonMethods._
 
-  case class Twitter(id: Long, text: String, publishedAt: Option[java.util.Date])
+case class Twitter(id: Long, text: String, publishedAt: Option[java.util.Date])
 
-  var twitters = Twitter(1, "hello scala", Some(new Date())) :: Twitter(2, "I like scala tour", None) :: Nil
+var twitters = Twitter(1, "hello scala", Some(new Date())) :: Twitter(2, "I like scala tour", None) :: Nil
 
-  var json = ("twitters"
-    -> twitters.map(
-      t => ("id" -> t.id)
-        ~ ("text" -> t.text)
-        ~ ("published_at" -> t.publishedAt.toString())))
+var json = ("twitters"
+  -> twitters.map(
+    t => ("id" -> t.id)
+      ~ ("text" -> t.text)
+      ~ ("published_at" -> t.publishedAt.toString())))
 
-  println(pretty(render(json)))
+println(pretty(render(json)))
 ```
 
 ### 测试
@@ -765,23 +765,23 @@ Scala DSL可以使测试更方便。
 测试是默认并发执行的。
 
 ```
-  import org.specs2.mutable._
+import org.specs2.mutable._
 
-  class FactorialSpec extends Specification {
-    args.report(color = false)
+class FactorialSpec extends Specification {
+  args.report(color = false)
 
-    def factorial(n: Int) = (1 to n).reduce(_ * _)
+  def factorial(n: Int) = (1 to n).reduce(_ * _)
 
-    "The 'Hello world' string" should {
-      "factorial 3 must be 6" in {
-        factorial(3) mustEqual 6
-      }
-      "factorial 4 must be 6" in {
-        factorial(4) must greaterThan(6)
-      } 
+  "The 'Hello world' string" should {
+    "factorial 3 must be 6" in {
+      factorial(3) mustEqual 6
     }
+    "factorial 4 must be 6" in {
+      factorial(4) must greaterThan(6)
+    } 
   }
-  specs2.run(new FactorialSpec)
+}
+specs2.run(new FactorialSpec)
 ```
 
 
