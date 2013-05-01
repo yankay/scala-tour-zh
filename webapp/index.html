@@ -26,12 +26,15 @@
                     <a id="logo" class="brand" href="#/welcome"><img src="img/logo.png">Scala 指南</a>
                     <ul class="nav">
                         <li class="">
-                            <a href="#/glance">概览</a>
+                            <a href="#/overview">概览</a>
                         </li>
                         <li class="">
                             <a href="#/about">关于</a>
                         </li>
-                    </ul><a class="lang" href="http://zh.scala-tour.com/" title="中文">中文</a> <a class="lang" href="http://www.scala-tour.com/" title="English">English</a>
+                        <li class="">
+                            <a href="#/discus">讨论</a>
+                        </li>
+                    </ul><a class="lang" href="http://zh.scala-tour.com/" title="中文">中文</a> <a class="lang" href="http://www.scala-tour.com/" title="English">English</a> <span class="doc"><i class="icon-list">&nbsp;</i><a href="http://docs.scala-lang.org/">文档</a></span>
                 </div>
             </div>
         </div>
@@ -50,9 +53,10 @@
                 </h1>
                 <p>
                     开始精彩的Scala旅程
-                </p>     <div class="step-nav">
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
-                        </div>
+                </p>
+                <div class="step-nav">
+                    <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                </div>
             </div>
             <div id="hello-wolrd" class="step slide" data-x="-2000" data-y="-2000">
                 <div class="row-fluid">
@@ -91,18 +95,57 @@ println("hello world")
                         <p>
                             使用方向键或者空格来翻页
                         </p>
-                         <div class="step-nav">
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        <div class="step-nav">
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="glance" class="step" data-x="0" data-y="0" data-scale="8"></div>
-            <div id="basics" class="step" data-x="0" data-y="-2000" data-scale="2">
+            <div id="overview" class="step" data-x="0" data-y="0" data-scale="4"></div>
+            <div id="basics" class="step" data-x="0" data-y="-1000" data-scale="2">
                 <div class="chapter">
                     <h2>
-                        基本
-                    </h2><a class="btn btn-primary btn-large" href="#/expression-and-values" >进入</a>
+                        基础
+                    </h2><a class="btn btn-primary btn-large" href="#/expression-and-values">进入</a>
+                </div>
+            </div>
+            <div id="basics-contents" class="step contents slide deeply" data-x="-3500" data-y="-2000" data-z="-3000" data-scale="1">
+                <div>
+                    <h2>
+                        目录(基础）
+                    </h2>
+                    <ul>
+                        <li>
+                            <a href="#/expression-and-values">表达式和值</a>
+                        </li>
+                        <li>
+                            <a href="#/first-class-function">函数是一等公民</a>
+                        </li>
+                        <li>
+                            <a href="#/loan-pattern">借贷模式</a>
+                        </li>
+                        <li>
+                            <a href="#/pass-by-name">按名称传递参数</a>
+                        </li>
+                        <li>
+                            <a href="#/define-class">类定义</a>
+                        </li>
+                        <li>
+                            <a href="#/duck-type">鸭子类型</a>
+                        </li>
+                        <li>
+                            <a href="#/currying">柯里化</a>
+                        </li>
+                        <li>
+                            <a href="#/generics">范型</a>
+                        </li>
+                        <li>
+                            <a href="#/traits">Traits</a>
+                        </li>
+                        <li class="overview-li">
+                            <a href="#/overview">概览</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div id="expression-and-values" class="step slide deeply" data-x="-2000" data-y="-2000" data-z="-3000">
@@ -142,14 +185,12 @@ println(helloWorld)
                             可以通过val定义一个常量，亦可以通过var定义一个变量。推荐多使用常量。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                            <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="-500" data-y="-2000" data-z="-3000">
+            <div id="first-class-function" class="step slide deeply" data-x="-500" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -195,15 +236,14 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
                         </p>
                         <p>
                             函数还可以像值一样，赋值给var或val。因此他也可以作为参数传给另一个函数。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="1000" data-y="-2000" data-z="-3000">
+            <div id="loan-pattern" class="step slide deeply" data-x="1000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -252,15 +292,14 @@ withScanner(File("/proc/self/stat"),
                         </p>
                         <p>
                             注：当表达式没有返回值时，默认返回Unit。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="2500" data-y="-2000" data-z="-3000">
+            <div id="pass-by-name" class="step slide deeply" data-x="2500" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -303,15 +342,14 @@ log(MSG + 1 / 0)
                         </p>
                         <p>
                             按名称传递参数可以减少不必要的计算和异常。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="4000" data-y="-2000" data-z="-3000">
+            <div id="define-class" class="step slide deeply" data-x="4000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -370,15 +408,14 @@ println("age: " + obama.age())
                         </p>
                         <p>
                             obama.age()的函数调用，可以省略小括号，简化为obama.age。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="5500" data-y="-2000" data-z="-3000">
+            <div id="duck-type" class="step slide deeply" data-x="5500" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -425,15 +462,14 @@ withClose(conn, conn =&gt;
                         </p>
                         <p>
                             不必使用继承这种不够灵活的特性。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="7000" data-y="-2000" data-z="-3000">
+            <div id="currying" class="step slide deeply" data-x="7000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -492,15 +528,14 @@ withClose(conn)(conn =&gt;
                         </p>
                         <p>
                             是否和java中的synchronized关键字用法很像？
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="8500" data-y="-2000" data-z="-3000">
+            <div id="generics" class="step slide deeply" data-x="8500" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -554,15 +589,14 @@ println(msg)
                         </p>
                         <p>
                             虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="10000" data-y="-2000" data-z="-3000">
+            <div id="traits" class="step slide deeply" data-x="10000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -614,14 +648,56 @@ println("Json: " + list.toString())
                         <p>
                             试着再在后面加上with JsonAble，给list添加toJson的能力
                         </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="advanced" class="step" data-x="-3000" data-y="0" data-scale="2">
+            <div id="funtional" class="step" data-x="-1500" data-y="0" data-scale="2">
                 <div class="chapter">
                     <h2>
                         函数式
                     </h2><a class="btn btn-primary btn-large" href="#/pattern-match">进入</a>
+                </div>
+            </div>
+            <div id="funtional-contents" class="step contents slide deeply" data-x="-3500" data-y="-500" data-z="-3000" data-scale="1">
+                <div>
+                    <h2>
+                        目录(函数式）
+                    </h2>
+                    <ul>
+                        <li>
+                            <a href="#/pattern-match">模式匹配</a>
+                        </li>
+                        <li>
+                            <a href="#/case-class">Case Class</a>
+                        </li>
+                        <li>
+                            <a href="#/function-prower">函数式的威力</a>
+                        </li>
+                        <li>
+                            <a href="#/function-true-prower">函数式真正的威力</a>
+                        </li>
+                        <li>
+                            <a href="#/word-count">Word Count</a>
+                        </li>
+                        <li>
+                            <a href="#/tail-recursion">尾递归</a>
+                        </li>
+                        <li>
+                            <a href="#/prowerful-for-loop">更强大的For循环</a>
+                        </li>
+                        <li>
+                            <a href="#/option">Option</a>
+                        </li>
+                        <li>
+                            <a href="#/lazy-initialization">Lazy初始化</a>
+                        </li>
+                        <li class="overview-li">
+                            <a href="#/overview">概览</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div id="pattern-match" class="step slide deeply" data-x="-2000" data-y="-500" data-z="-3000">
@@ -676,15 +752,14 @@ println(fibonacci(3))
                         </p>
                         <p>
                             在最后添加 println(fibonacci(-3))；println(fibonacci("3"))；来检查刚刚修改的效果。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="-500" data-y="-500" data-z="-3000">
+            <div id="case-class" class="step slide deeply" data-x="-500" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -738,15 +813,14 @@ println(value(FibonacciExpr(3)))
                         </p>
                         <p>
                             由于使用了require(n &gt;= 0)来检验参数，尝试使用负数，会抛出异常。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="1000" data-y="-500" data-z="-3000">
+            <div id="function-prower" class="step slide deeply" data-x="1000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -794,15 +868,14 @@ println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
                         </p>
                         <p>
                             相比于Ruby等动态语言,这威力来自于科学而不是魔法
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="2500" data-y="-500" data-z="-3000">
+            <div id="function-true-prower" class="step slide deeply" data-x="2500" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -844,15 +917,14 @@ println("cat file | grep 'warn' | grep '2013' | wc : "
                         </p>
                         <p>
                             这个例子是用函数式的代码模拟“cat file | grep 'warn' | grep '2013' | wc”的行为。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="4000" data-y="-500" data-z="-3000">
+            <div id="word-count" class="step slide deeply" data-x="4000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -900,15 +972,14 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更清晰
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="5500" data-y="-500" data-z="-3000">
+            <div id="tail-recursion" class="step slide deeply" data-x="5500" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -954,15 +1025,14 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             尾递归会在编译期优化，因此不用担心一般递归造成的栈溢出问题。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="7000" data-y="-500" data-z="-3000">
+            <div id="prowerful-for-loop" class="step slide deeply" data-x="7000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -995,7 +1065,7 @@ println("wordcount:" + num)
                     </div>
                     <div class="span4">
                         <h2>
-                            更强大的For
+                            更强大的For循环
                         </h2>
                         <p>
                             循环语句是指令式编程的特产，Scala对其加以改进，成为适应函数式风格的利器。
@@ -1005,15 +1075,14 @@ println("wordcount:" + num)
                         </p>
                         <p>
                             这个例子是使用for循环代替map函数。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="8500" data-y="-500" data-z="-3000">
+            <div id="option" class="step slide deeply" data-x="8500" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1067,15 +1136,14 @@ println(osName.getOrElse("none"))
                         </p>
                         <p>
                             尝试在最后添加 osName.foreach(print _) 。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="10000" data-y="-500" data-z="-3000">
+            <div id="lazy-initialization" class="step slide deeply" data-x="10000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1109,7 +1177,7 @@ version.minorVersion.foreach(println _)
                     </div>
                     <div class="span4">
                         <h2>
-                            Lazy
+                            Lazy初始化
                         </h2>
                         <p>
                             Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初始化。
@@ -1123,14 +1191,53 @@ version.minorVersion.foreach(println _)
                         <p>
                             可以使用lazy来延迟获取。
                         </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="concurrency" class="step" data-x="0" data-y="2000" data-scale="2">
+            <div id="concurrency" class="step" data-x="0" data-y="1000" data-scale="2">
                 <div class="chapter">
                     <h2>
                         并发
                     </h2><a class="btn btn-primary btn-large" href="#/using-actor">进入</a>
+                </div>
+            </div>
+            <div id="concurrency-contents" class="step contents slide deeply" data-x="-3500" data-y="1000" data-z="-3000" data-scale="1">
+                <div>
+                    <h2>
+                        目录(并发）
+                    </h2>
+                    <ul>
+                        <li>
+                            <a href="#/using-actor">使用Actor</a>
+                        </li>
+                        <li>
+                            <a href="#/simplify-actor">Actor更简化的用法</a>
+                        </li>
+                        <li>
+                            <a href="#/actor-principle">Actor原理</a>
+                        </li>
+                        <li>
+                            <a href="#/return-sync">同步返回</a>
+                        </li>
+                        <li>
+                            <a href="#/return-async">异步返回</a>
+                        </li>
+                        <li>
+                            <a href="#/parallel-collection">并行集合</a>
+                        </li>
+                        <li>
+                            <a href="#/parallel-word-count">并行wordcount</a>
+                        </li>
+                        <li>
+                            <a href="#/remote-actor">远程Actor</a>
+                        </li>
+                        <li class="overview-li">
+                            <a href="#/overview">概览</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div id="using-actor" class="step slide deeply" data-x="-2000" data-y="1000" data-z="-3000">
@@ -1178,15 +1285,14 @@ echoServer ! "hi"
                         </p>
                         <p>
                             这个例子是一个EchoServer，接受信息并打印。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="-500" data-y="1000" data-z="-3000">
+            <div id="simplify-actor" class="step slide deeply" data-x="-500" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1218,7 +1324,7 @@ echoServer ! "hi"
                     </div>
                     <div class="span4">
                         <h2>
-                            更简化的写法
+                            Actor更简化的用法
                         </h2>
                         <p>
                             可以通过更简化的办法声明Actor。
@@ -1231,15 +1337,14 @@ echoServer ! "hi"
                         </p>
                         <p>
                             react和一般的函数不同，他不会返回。需要用loop函数来循环调用它。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="1000" data-y="1000" data-z="-3000">
+            <div id="actor-principle" class="step slide deeply" data-x="1000" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1288,15 +1393,14 @@ val echoServers = (1 to 4).map(x =&gt; echoServer(x.toString))
                         </p>
                         <p>
                             一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="2500" data-y="1000" data-z="-3000">
+            <div id="return-sync" class="step slide deeply" data-x="2500" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1345,15 +1449,14 @@ println(version)
                         </p>
                         <p>
                             将println(version)修改为println(version())
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="4000" data-y="1000" data-z="-3000">
+            <div id="return-async" class="step slide deeply" data-x="4000" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1401,15 +1504,14 @@ fromURL ! (versionUrl, actor {
                         </p>
                         <p>
                             当react不在loop中时，有必要使用reactWithin检测超时。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="5500" data-y="1000" data-z="-3000">
+            <div id="parallel-collection" class="step slide deeply" data-x="5500" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1438,28 +1540,27 @@ println("time: " + (System.currentTimeMillis - s) + "ms")
                     </div>
                     <div class="span4">
                         <h2>
-                            并发集合
+                            并行集合
                         </h2>
                         <p>
                             这个例子是访问若干URL，并记录时间。
                         </p>
                         <p>
-                            如果能并发访问，就可以大幅提高性能。
+                            如果能并行访问，就可以大幅提高性能。
                         </p>
                         <p>
                             尝试将urls.map修改为urls.par.map。这样每个map中的函数都可以并发执行。
                         </p>
                         <p>
                             当函数式和并发结合，就会这样让人兴奋。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="7000" data-y="1000" data-z="-3000">
+            <div id="parallel-word-count" class="step slide deeply" data-x="7000" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1488,28 +1589,27 @@ println("wordcount:" + num)
                     </div>
                     <div class="span4">
                         <h2>
-                            并发wordcount
+                            并行wordcount
                         </h2>
                         <p>
                             这个例子是访问若干URL，并记录时间。
                         </p>
                         <p>
-                            并发集合支持大部分集合的功能。
+                            并行集合支持大部分集合的功能。
                         </p>
                         <p>
-                            在前面有一个wordcount例子，也可以用并发集合加以实现。
+                            在前面有一个wordcount例子，也可以用并行集合加以实现。
                         </p>
                         <p>
                             不增加程序复杂性，却能大幅提高程序利用多核的能力。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="8500" data-y="1000" data-z="-3000">
+            <div id="remote-actor" class="step slide deeply" data-x="8500" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1568,14 +1668,53 @@ timeServer !? "give me time" match {
                         <p>
                             调用时通过select创建client.其余和普通Actor一样。
                         </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="practice" class="step" data-x="3000" data-y="0" data-scale="2">
+            <div id="practice" class="step" data-x="1500" data-y="0" data-scale="2">
                 <div class="chapter">
                     <h2>
                         实践
                     </h2><a class="btn btn-primary btn-large" href="#/using-java">进入</a>
+                </div>
+            </div>
+            <div id="practice-contents" class="step contents slide deeply" data-x="-3500" data-y="2500" data-z="-3000" data-scale="1">
+                <div>
+                    <h2>
+                        目录(实践)
+                    </h2>
+                    <ul>
+                        <li>
+                            <a href="using-java">使用Java</a>
+                        </li>
+                        <li>
+                            <a href="equality">相等性</a>
+                        </li>
+                        <li>
+                            <a href="extractor">抽取器</a>
+                        </li>
+                        <li>
+                            <a href="memory-pattern">记忆模式</a>
+                        </li>
+                        <li>
+                            <a href="implicit-conversion">隐式转换</a>
+                        </li>
+                        <li>
+                            <a href="dsl">DSL</a>
+                        </li>
+                        <li>
+                            <a href="test">测试</a>
+                        </li>
+                        <li>
+                            <a href="simple-build-tool">Simple Build Tool</a>
+                        </li>
+                        <li class="overview-li">
+                            <a href="#/overview">概览</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div id="using-java" class="step slide deeply" data-x="-2000" data-y="2500" data-z="-3000">
@@ -1622,15 +1761,14 @@ println(BeanUtils.describe(bean))
                         </p>
                         <p>
                             Apache BeanUtils就可以正常工作。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="-500" data-y="2500" data-z="-3000">
+            <div id="equality" class="step slide deeply" data-x="-500" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1679,15 +1817,14 @@ println(new Person("Black") == new Person("Black"))
                         </p>
                         <p>
                             case类会自动生成正确的equals函数。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="1000" data-y="2500" data-z="-3000">
+            <div id="extractor" class="step slide deeply" data-x="1000" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1740,15 +1877,14 @@ object Email {
                         </p>
                         <p>
                             case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="2500" data-y="2500" data-z="-3000">
+            <div id="memory-pattern" class="step slide deeply" data-x="2500" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1807,15 +1943,14 @@ println("it takes " + (System.currentTimeMillis() - t2) + "ms")
                         </p>
                         <p>
                             尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改fibonacci(n - 1) + fibonacci(n - 2)，可以提高更多。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="4000" data-y="2500" data-z="-3000">
+            <div id="implicit-conversion" class="step slide deeply" data-x="4000" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1847,15 +1982,14 @@ println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
                         </p>
                         <p>
                             这个例子可以将String自动转换为Date类型。隐式转换时实现DSL的重要工具。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="5500" data-y="2500" data-z="-3000">
+            <div id="dsl" class="step slide deeply" data-x="5500" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1903,15 +2037,14 @@ println(pretty(render(json)))
                         </p>
                         <p>
                             自己编写DSL有点复杂，但使用方便灵活的。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="7000" data-y="2500" data-z="-3000">
+            <div id="test" class="step slide deeply" data-x="7000" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1960,15 +2093,14 @@ specs2.run(new FactorialSpec)
                         </p>
                         <p>
                             测试是默认并发执行的。
-                        </p>                        <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left"></i>上一页</a> 
-                            <a class="btn" type="button"><i class="icon-arrow-up"></i>目录</a>
-                            <a class="btn next-step" type="button"><i class="icon-arrow-right"></i>下一页</a>
+                        </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="step slide deeply" data-x="8500" data-y="2500" data-z="-3000">
+            <div id="simple-build-tool" class="step slide deeply" data-x="8500" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
@@ -1979,15 +2111,16 @@ specs2.run(new FactorialSpec)
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-#Linux/Mac:
+#Linux/Mac(compile &amp; run):
 git clone https://github.com/yankay/scala-tour-zh.git
 cd scala-tour-zh
-./sbt/sbt run
+./sbt/sbt stage
+./target/start
 
-#Windows
+#Windows(can only compile):
 git clone https://github.com/yankay/scala-tour-zh.git
 cd scala-tour-zh
-sbt\sbt run
+sbt\sbt stage
 </textarea>
                                     </form>
                                 </div>
@@ -2010,28 +2143,64 @@ sbt\sbt run
                         <p>
                             例如你想在自己的机器上执行这个Scala-Tour
                         </p>
+                        <div class="step-nav">
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="about" class="step" data-x="3750" data-y="2500" data-scale="1">
+            <div id="about" class="step" data-x="3000" data-y="2000" data-scale="1">
                 <h2>
                     关于
                 </h2>
+                <p>
+                    这个指南源自于作者对Scala的热爱和对传播Scala的愿望
+                </p>
+                <h3>
+                    其他资料:
+                </h3>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="http://twitter.github.com/scala_school/">Scala School!</a>: Twitter的Scala教学
+                        </li>
+                        <li>
+                            <a href="http://docs.scala-lang.org/tutorials/tour/tour-of-scala.html">A Tour of Scala</a>:官方Scala Tour
+                        </li>
+                        <li>
+                            <a href="http://www.scala-lang.org/docu/files/ScalaByExample.pdf">Scala By Example</a>:更多的Scala例程
+                        </li>
+                        <li>
+                            <a href="http://docs.scala-lang.org/cheatsheets/">Scala Cheatsheet</a>:一眼望穿Scala基本语法
+                        </li>
+                        <li>
+                            <a href="https://class.coursera.org/progfun-2012-001/class/index">Functional Programming Principles in Scala</a>:Coursera 的Scala课程
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="discus" class="step" data-x="4500" data-y="2000" data-scale="1">
+                <div>
+                    <div id="disqus_thread"></div><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                </div>
             </div>
         </div>
         <div class="hint">
             <p>
                 Use a spacebar or arrow keys to navigate
             </p>
+        </div>
+        <div style="position: fixed; bottom: 0px; left: 10px; pointer-events: auto; width:100%;">
+            <div class="container" style="width:1024px">
+                <iframe src="http://ghbtns.com/github-btn.html?user=yankay&amp;repo=scala-tour&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe> <span id="designed-by">Designed by <a href="http://www.yankay.com">颜开</a></span>
+            </div>
         </div><script>
 if ("ontouchstart" in document.documentElement) { 
         document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate<\/p>";
         }
         </script> <script src="js/jquery.min.js">
-</script>
-
- <script src="js/impress.js">
 </script> <script src="js/bootstrap.js">
+</script> <script src="js/impress.js">
 </script> <script>
 document.getElementById("body").className=document.getElementById("body").className.replace('onload',' ');
         impress().init();
@@ -2039,13 +2208,25 @@ document.getElementById("body").className=document.getElementById("body").classN
 </script> <script src="js/matchbrackets.js">
 </script> <script src="js/clike.js">
 </script> <script src="js/scala-tour.js">
-</script>
-        <div style="position: fixed; bottom: 0px; left: 10px; pointer-events: auto; width:100%;">
-            <div class="container" style="width:1024px">
-                <!--
-                <iframe src="http://ghbtns.com/github-btn.html?user=yankay&amp;repo=scala-tour&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe> <iframe src="http://ghbtns.com/github-btn.html?user=yankay&amp;repo=scala-tour&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
-            -->
-            </div>
-        </div>
+</script> <!--
+ <script type="text/javascript">
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'scala-tour'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                    </script><script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-40580124-1', 'scala-tour.com');
+        ga('send', 'pageview');
+        </script>-->
     </body>
 </html>

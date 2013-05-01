@@ -468,7 +468,8 @@ val echoServer = new EchoServer
 echoServer ! "hi"
 ```
 
-### 更简化的写法
+### Actor更简化的用法
+
 可以通过更简化的办法声明Actor。
 导入scala.actors.Actor.中的actor函数。
 这个函数可以接受一个表达式返回Actor。
@@ -791,13 +792,14 @@ SBT是Scala的最佳编译工具，在他的帮助下，
 例如你想在自己的机器上执行这个Scala-Tour
 
 ```
-#Linux/Mac:
+#Linux/Mac(compile & run):
 git clone https://github.com/yankay/scala-tour-zh.git
 cd scala-tour-zh
-./sbt/sbt run
+./sbt/sbt stage
+./target/start
 
-#Windows
+#Windows(can only compile):
 git clone https://github.com/yankay/scala-tour-zh.git
 cd scala-tour-zh
-sbt\sbt run
+sbt\sbt stage
 ```

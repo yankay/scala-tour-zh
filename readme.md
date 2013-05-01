@@ -7,10 +7,11 @@ http://www.scala-tour.com/
 ## Compile And Run
  ```
 Linux/Mac:
-./sbt/sbt run
+./sbt/sbt stage
+./target/start
 
-Windows
-sbt\sbt run
+Windows can only compile
+sbt\sbt stage
  ```
 view 
 http://localhost:8080/#/welcome
