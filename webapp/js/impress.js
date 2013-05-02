@@ -808,10 +808,10 @@
                     (target !== document.documentElement) ) {
                 target = target.parentNode;
             }
-            
+            if(target.classList.contains("direction")){
             if ( api.goto(target) ) {
                 event.preventDefault();
-            }
+            }}
         }, false);
         
         // touch handler to detect taps on the left and right side of the screen
