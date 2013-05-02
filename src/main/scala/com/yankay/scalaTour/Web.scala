@@ -81,7 +81,7 @@ class RunServlet extends HttpServlet {
     proc match {
       case Some(p) => {
         val pid = p.run();
-        val timeout = new TimeoutActor(pid, 5000)
+        val timeout = new TimeoutActor(pid, 10*1000)
         timeout.start
         val existValue = pid.exitValue()
         timeout ! existValue

@@ -298,9 +298,14 @@ list-style-image:url('../img/glyphicons_221_unshare.png');
 .contents li{
 line-height: 2;
 }
-.contents a{
+
+.contents li a {
 	text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
 		font-size: 24px;
 	color: inherit;
-background: rgba(255,255,255,0);
+	background: rgba(255,255,255,0);
+}
+
+.important{
+	 font-weight:bold;
 }

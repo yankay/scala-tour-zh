@@ -144,9 +144,9 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 /*.cm-s-solarized .CodeMirror-gutters {
   padding: 0 15px 0 10px;
   box-shadow: 0 10px 20px black;
-  border-right: 1px solid;
-}*/
-
+  border-right: 1px solid;*/
+}
+*/
 /* Gutter colors and line number styling based of color scheme (dark / light) */
 
 /* Dark */
@@ -160,7 +160,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 }
 
 /* Light */
-.c/*m-s-solarized.cm-s-light .CodeMirror-gutters {
+/*.cm-s-solarized.cm-s-light .CodeMirror-gutters {
   background-color: #eee8d5;
   border-color: #eee8d5;
 }*/

@@ -106,7 +106,7 @@ println("hello world")
                 <div class="chapter">
                     <h2>
                         基础
-                    </h2><a class="btn btn-primary btn-large" href="#/expression-and-values">进入</a>
+                    </h2><a class="btn btn-primary btn-large next-step">进入</a>
                 </div>
             </div>
             <div id="basics-contents" class="step contents slide deeply" data-x="-3500" data-y="-2000" data-z="-3000" data-scale="1">
@@ -128,7 +128,7 @@ println("hello world")
                             <a href="#/pass-by-name">按名称传递参数</a>
                         </li>
                         <li>
-                            <a href="#/define-class">类定义</a>
+                            <a href="#/define-class">定义类</a>
                         </li>
                         <li>
                             <a href="#/duck-type">鸭子类型</a>
@@ -142,11 +142,12 @@ println("hello world")
                         <li>
                             <a href="#/traits">Traits</a>
                         </li>
-                        <li class="overview-li">
-                            <a href="#/overview">概览</a>
-                        </li>
                     </ul>
                 </div>
+                <div class="step-nav">
+                           <a class="btn" type="button" href="#/overview"><i class="icon-arrow-up">&nbsp;</i>概览</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                 </div>
             </div>
             <div id="expression-and-values" class="step slide deeply" data-x="-2000" data-y="-2000" data-z="-3000">
                 <div class="row-fluid">
@@ -179,8 +180,9 @@ println(helloWorld)
                             表达式和值
                         </h2>
                         <p>
-                            在Scala中，几乎所有的语言元素都是表达式。println("hello wolrd")是一个表达式， "hello"+" world"也是一个表达式。
-                        </p>
+                            在Scala中，几乎所有的语言元素都是表达式。 </p>
+                            <pre>println("hello wolrd")</pre> <p>是一个表达式， </p><pre>"hello"+" world"</pre> <p>也是一个表达式。</p>
+                        
                         <p>
                             可以通过val定义一个常量，亦可以通过var定义一个变量。推荐多使用常量。
                         </p>
@@ -235,7 +237,7 @@ println("addOne(squareVal,2):" + addOne(squareVal, 2))
                             使用Block表达式的时候，默认最后一行的返回是返回值，无需显示指定。
                         </p>
                         <p>
-                            函数还可以像值一样，赋值给var或val。因此他也可以作为参数传给另一个函数。
+                            函数还可以像值一样，赋值给var或val。因此<span class="important">函数也可以作为参数传给另一个函数。</span>
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -288,7 +290,7 @@ withScanner(File("/proc/self/stat"),
                             这个例子是从/proc/self/stat文件中读取当前进程的pid。
                         </p>
                         <p>
-                            withScanner封装了try-finally块，所以调用者不用再close。
+                            withScanner封装了try-finally块，所以调用者<span class="important">不用再close</span>。
                         </p>
                         <p>
                             注：当表达式没有返回值时，默认返回Unit。
@@ -332,13 +334,14 @@ log(MSG + 1 / 0)
                             按名称传递参数
                         </h2>
                         <p>
-                            这个例子演示了按名称传递参数，最末有1/0这个明显会产生异常的计算，运行该程序会产生异常。
+                            这个例子演示了按名称传递参数，由于有除以0，所以运行该程序会产生异常。
+                        </p>
+                        <p>试着将</p><pre>def log(msg: String)</pre>
+                            <p>修改为 </p><pre>def log(msg: =&gt; String)</pre>
+                            <p>由按值传递修改为按名称传递后将不会产生异常。
                         </p>
                         <p>
-                            试着将def log(msg: String)修改为def log(msg: =&gt; String)。由按值传递修改为按名称传递后将不会产生异常。
-                        </p>
-                        <p>
-                            因为log函数的参数是按名称传递，参数会等到真正访问的时候才会计算，由于logEnable = false，所以被跳过。
+                            因为log函数的参数是按名称传递，参数会等到实际使用的时候才会计算，所以被跳过。
                         </p>
                         <p>
                             按名称传递参数可以减少不必要的计算和异常。
@@ -377,7 +380,7 @@ println("Persion: " + obama)
 println("firstName: " + obama.firstName)
 println("lastName: " + obama.lastName)
 obama.age_=(51)
-println("age: " + obama.age())
+println("age: " + obama.age)
 </textarea>
                                     </form>
                                 </div>
@@ -389,25 +392,23 @@ println("age: " + obama.age())
                     </div>
                     <div class="span4">
                         <h2>
-                            类定义
+                            定义类
                         </h2>
                         <p>
-                            可以用class关键字来定义类。并通过new来创建类。
+                            可以用<span class="important">class</span>关键字来定义类。并通过<span class="important">new</span>来创建类。
                         </p>
                         <p>
                             在定义类时可以定义字段，如firstName，lastName。这样做还可以自动生成构造函数。
                         </p>
                         <p>
-                            可以在类中通过def定义函数。var和val定义字段。
+                            可以在类中通过<span class="important">def定义函数</span>。<span class="important">var和val定义字段</span>。
                         </p>
                         <p>
-                            函数名是任何字符如+,-,*,/。
+                            函数名是<span class="important">任何字符</span>如+,-,*,/。
                         </p>
-                        <p>
-                            例子中obama.age_=(51)的函数调用，可以简化为obama.age = 51 。
-                        </p>
-                        <p>
-                            obama.age()的函数调用，可以省略小括号，简化为obama.age。
+                         <p>试着将</p><pre>obama.age_=(51)</pre>
+                            <p>简化为</p><pre>obama.age = 51</pre>
+                            <p>这样的简化更像调用一个变量。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -426,7 +427,8 @@ println("age: " + obama.age())
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } =&gt; Unit) {
+def withClose(closeAble: { def close(): Unit }, 
+    op: { def close(): Unit } =&gt; Unit) {
     try {
         op(closeAble)
     } finally {
@@ -458,7 +460,7 @@ withClose(conn, conn =&gt;
                             走起来像鸭子，叫起来像鸭子，就是鸭子。
                         </p>
                         <p>
-                            这个例子中使用{ def close(): Unit }作为参数类型。因为任何含有close()的函数的类都可以作为参数。
+                            这个例子中使用 </p><pre>{ def close(): Unit }</pre><p>作为参数类型。因此任何含有close()的函数的类都可以作为参数。
                         </p>
                         <p>
                             不必使用继承这种不够灵活的特性。
@@ -480,7 +482,8 @@ withClose(conn, conn =&gt;
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } =&gt; Unit) {
+def withClose(closeAble: { def close(): Unit })
+    (op: { def close(): Unit } =&gt; Unit) {
     try {
         op(closeAble)
     } finally {
@@ -509,25 +512,22 @@ withClose(conn)(conn =&gt;
                             柯里化
                         </h2>
                         <p>
-                            这个例子和上面的功能相同。不同的是使用了柯里化（Currying)的技术。
+                            这个例子和上面的功能相同。不同的是使用了<span class="important">柯里化(Currying)</span>技术。
                         </p>
                         <p>
-                            def add(x:Int, y:Int) = x + y 是普通的函数
+                            <pre>def add(x:Int, y:Int) = x + y</pre> <p> 是普通的函数 </p>
                         </p>
                         <p>
-                            def add(x:Int) = (y:Int) =&gt; x + y 是柯里化后的函数，相当于返回一个匿名函数表达式。
+                            <pre>def add(x:Int) = (y:Int) =&gt; x + y</pre>  <p>是柯里化后的函数，相当于返回一个匿名函数表达式。 </p>
                         </p>
                         <p>
-                            def add(x:Int)(y:Int) = x + y 是上面的简化写法
+                           <pre> def add(x:Int)(y:Int) = x + y</pre> <p> 是简化写法</p>
                         </p>
                         <p>
                             柯里化可以让我们构造出更像原生语言提供的功能的代码
                         </p>
                         <p>
-                            例子中的withclose(...)(...)换成withclose(...){...}
-                        </p>
-                        <p>
-                            是否和java中的synchronized关键字用法很像？
+                            试着将例子中的withclose(...)(...)换成withclose(...){...}
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -546,27 +546,24 @@ withClose(conn)(conn =&gt;
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-def withClose[A &lt;: { def close(): Unit }, B](closeAble: A)(op: A =&gt; B) {
-    try {
-        op(closeAble)
-    } finally {
-        closeAble.close()
-    }
-}
-
+def withClose[A <: { def close(): Unit }, B](closeAble: A)
+  (f: A => B): B =
+  try {
+    f(closeAble)
+  } finally {
+    closeAble.close()
+  }
 class Connection {
-    val msg = "123456"
-    def close() = println("close Connection")
+  def close() = println("close Connection")
+}
+val conn: Connection = new Connection()
+val msg = withClose(conn) { conn =>
+  {
+    println("do something with Connection")
+    "123456"
+  }
 }
 
-val conn: Connection = new Connection()
-val msg = withClose(conn) { conn =&gt;
-    {
-        println("do something with Connection")
-        conn.msg
-    }
-}
-    
 println(msg)
 </textarea>
                                     </form>
@@ -582,10 +579,11 @@ println(msg)
                             范型
                         </h2>
                         <p>
-                            上面的例子可以使用泛型变得更简洁更灵活。
+                            之前的例子可以使用泛型变得更简洁更灵活。
                         </p>
                         <p>
-                            试着将val msg = "123456"修改为val msg = 123456。
+                            试着将</p>
+                            <pre>"123456"</pre> <p>修改为</p><pre>123456</pre>
                         </p>
                         <p>
                             虽然msg由String类型变为Int类型，但是由于使用了泛型，代码依旧可以正常运行。
@@ -608,24 +606,24 @@ println(msg)
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 trait ForEachAble[A] {
-    def iterator: java.util.Iterator[A]
-    def foreach(f: A =&gt; Unit) = {
-        val iter = iterator
-        while (iter.hasNext)
-            f(iter.next)
-    }
+  def iterator: java.util.Iterator[A]
+  def foreach(f: A => Unit) = {
+    val iter = iterator
+    while (iter.hasNext)
+      f(iter.next)
+  }
 }
 
 trait JsonAble {
-    override def toString() =
-        scala.util.parsing.json.JSONFormat.defaultFormatter(this)
+  def toJson() =
+    scala.util.parsing.json.JSONFormat.defaultFormatter(this)
 }
 
-val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
+val list = new java.util.ArrayList[Int]() with ForEachAble[Int] 
 list.add(1); list.add(2)
 
-list.foreach(x =&gt; println(x))
-println("Json: " + list.toString())
+println("For each: "); list.foreach(x => println(x))
+//println("Json: " + list.toJson())
 </textarea>
                                     </form>
                                 </div>
@@ -640,16 +638,17 @@ println("Json: " + list.toString())
                             Traits
                         </h2>
                         <p>
-                            Traits就像是有函数体的Interface。使用with关键字来混入。
+                            Traits就像是有函数体的Interface。使用<span class="important">with</span>关键字来混入。
                         </p>
                         <p>
                             这个例子是给java.util.ArrayList添加了foreach的功能。
                         </p>
                         <p>
-                            试着再在后面加上with JsonAble，给list添加toJson的能力
+                            试着再在with ForEachAble[Int]后面加上</p>
+                            <pre>with JsonAble</pre><p>给list添加toJson的能力
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/basics-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a><a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -658,7 +657,7 @@ println("Json: " + list.toString())
                 <div class="chapter">
                     <h2>
                         函数式
-                    </h2><a class="btn btn-primary btn-large" href="#/pattern-match">进入</a>
+                    </h2><a class="btn btn-primary btn-large next-step">进入</a>
                 </div>
             </div>
             <div id="funtional-contents" class="step contents slide deeply" data-x="-3500" data-y="-500" data-z="-3000" data-scale="1">
@@ -694,11 +693,12 @@ println("Json: " + list.toString())
                         <li>
                             <a href="#/lazy-initialization">Lazy初始化</a>
                         </li>
-                        <li class="overview-li">
-                            <a href="#/overview">概览</a>
-                        </li>
+                   
                     </ul>
-                </div>
+                </div><div class="step-nav">
+                           <a class="btn" type="button" href="#/overview"><i class="icon-arrow-up">&nbsp;</i>概览</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                 </div>
             </div>
             <div id="pattern-match" class="step slide deeply" data-x="-2000" data-y="-500" data-z="-3000">
                 <div class="row-fluid">
@@ -719,6 +719,8 @@ def fibonacci(in: Any): Int = in match {
 }
 
 println(fibonacci(3))
+//println(fibonacci(-3))
+//println(fibonacci("3"))
 </textarea>
                                     </form>
                                 </div>
@@ -737,21 +739,16 @@ println(fibonacci(3))
                         </p>
                         <p>
                             这个例子展示的使用用模式匹配实现斐波那契。
-                        </p>
-                        <p>
                             使用case来匹配参数，如果case _，则可以匹配任何参数。
                         </p>
                         <p>
-                            这个例子有所不足，当输入负数时，会无限循环。
+                            试着将</p><pre>case n: Int</pre>
+                             <p>修改为 </p>
+                            <pre>case n: Int if (n &gt; 1)</pre><p>case后添加if语句判断,这样修改当输入负数时，就不会无限循环。
                         </p>
-                        <p>
-                            可以在case后添加if语句判断，将case n: Int 修改为 case n: Int if (n &gt; 1)即可。
-                        </p>
-                        <p>
-                            可以在case _ 前加上 case n: String =&gt; fibonacci(n.toInt)，使之匹配字符串类型。
-                        </p>
-                        <p>
-                            在最后添加 println(fibonacci(-3))；println(fibonacci("3"))；来检查刚刚修改的效果。
+                         <p>
+                            模式匹配也可以匹配类型，在case _ 前加上</p>
+                            <pre>case n: String =&gt; fibonacci(n.toInt)</pre><p>这样就可以匹配String类型
                         </p>
                         <div class="step-nav">
                             <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -781,7 +778,8 @@ case class SumExpr(a: Expr, b: Expr) extends Expr
 def value(in: Expr): Int = in match {
   case FibonacciExpr(0) =&gt; 0
   case FibonacciExpr(1) =&gt; 1
-  case FibonacciExpr(n) =&gt; value(SumExpr(FibonacciExpr(n - 1), FibonacciExpr(n - 2)))
+  case FibonacciExpr(n) =&gt; 
+    value(SumExpr(FibonacciExpr(n - 1), FibonacciExpr(n - 2)))
   case SumExpr(a, b) =&gt; value(a) + value(b)
   case _ =&gt; 0
 }
@@ -800,19 +798,12 @@ println(value(FibonacciExpr(3)))
                             Case Class
                         </h2>
                         <p>
-                            case class 顾名思义就是为case语句专门设计的类。
-                        </p>
-                        <p>
+                            case class 顾名思义就是为case语句专门设计的类，
                             在普通类的基础上添加了和类名一直的工厂方法，
+                            还添加了hashcode,equals和toString等方法。
                         </p>
                         <p>
-                            还添加了hashcode,equals和toString方法。
-                        </p>
-                        <p>
-                            试试最后添加 println(Sum(1,2)) 。
-                        </p>
-                        <p>
-                            由于使用了require(n &gt;= 0)来检验参数，尝试使用负数，会抛出异常。
+                            由于使用了require(n &gt;= 0)来检验参数，如果使用负数计算，将会抛出异常。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -841,9 +832,8 @@ def containsOdd(list: List[Int]): Boolean = {
   return false;
 }
 
-println("list containsOdd by for loop:" + containsOdd(list))
+println("list contains Odd ? " + containsOdd(list))
 
-println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
 </textarea>
                                     </form>
                                 </div>
@@ -858,13 +848,14 @@ println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
                             函数式的威力
                         </h2>
                         <p>
-                            这个例子是判断一个List中是否含有奇数。
+                            这个例子是用指令式编程判断一个List中是否含有奇数。
                         </p>
+
+                        <p> 试着将</p> <pre>containsOdd(list)</pre> <p>替换为 </p><pre>list.exists((x: Int) => x % 2 ==1)</pre> 
                         <p>
-                            第一行到倒数第二行是使用for循环的过程式编程解决。最后一行是通过函数式编程解决。
-                        </p>
+                            通过将函数作为参数，可以使程序更简洁。还可以再简化为 </p><pre>list.exists(_ % 2 == 1)</pre> 
                         <p>
-                            通过将函数作为参数，可以使程序极为简洁。其中 _ % 2 == 1 是 (x: Int) =&gt; x % 2 == 的简化写法。
+                          可以用_替代参数
                         </p>
                         <p>
                             相比于Ruby等动态语言,这威力来自于科学而不是魔法
@@ -886,7 +877,8 @@ println("list containsOdd by funtional:" + list.exists(_ % 2 == 1))
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg",
+  "error 2013 msg", "warn 2013 msg")
 
 println("cat file | grep 'warn' | grep '2013' | wc : " 
     + file.filter(_.contains("warn")).filter(_.contains("2013")).size)
@@ -904,20 +896,18 @@ println("cat file | grep 'warn' | grep '2013' | wc : "
                             函数式真正的威力
                         </h2>
                         <p>
-                            函数式除了能简化代码外，更重要的是他关注的是Input和Output，函数本身没有副作用。
+                            函数式除了能简化代码外，更重要的是他关注的是<span class="important">Input</span>和<span class="important">Output</span>，函数本身没有副作用。
                         </p>
                         <p>
-                            就是Unix pipeline一样，简单的命令可以组合在一起。
-                        </p>
-                        <p>
-                            List的filter方法接受一个过滤函数，返回一个新的List
+                            就是Unix pipeline一样，简单的命令组合在一起威力无穷。
                         </p>
                         <p>
                             如果你喜欢Unix pipeline的方式，你一定也会喜欢函数式编程。
                         </p>
                         <p>
-                            这个例子是用函数式的代码模拟“cat file | grep 'warn' | grep '2013' | wc”的行为。
-                        </p>
+                            这个例子是用函数式的代码模拟<pre></p>cat file | grep 'warn' | grep '2013' | wc</pre>
+                          <p>  List的filter方法接受一个过滤函数，返回一个新的List，作为下一个方法的输入。</p>
+                        
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
@@ -935,7 +925,8 @@ println("cat file | grep 'warn' | grep '2013' | wc : "
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg",
+  "error 2013 msg", "warn 2013 msg")
 
 def wordcount(str: String): Int = str.split(" ").count("msg" == _)
   
@@ -956,22 +947,19 @@ println("wordcount:" + num)
                             Word Count
                         </h2>
                         <p>
-                            Word Count是一个MapReduce的一个经典示例。巧合的是，使用函数式的编程法，用类似MapReduce的方法实现word count也是最直观的。
+                            Word Count是一个MapReduce的一个经典示例。在函数式编程中，Word Count最直观的实现方法也是MapReduce。
                         </p>
                         <p>
-                            这个例子介绍了List的两个重要的高阶方法map和reduceLeft。
+                            这个例子介绍了List的两个重要的高阶方法<span class="important">map</span>和<span class="important">reduceLeft</span>。
+                        </p>
+                       <p>
+                            <span class="important">map</span>接受一个转换函数,返回转换结果。
                         </p>
                         <p>
-                            List的map方法接受一个转换函数，返回一个经过转换的List。该例子中会转换为[1,1,1,1]
-                        </p>
+                            <span class="important">reduceLeft</span>接受一个合并函数，依次遍历合并。
+                        </p> 
                         <p>
-                            List的reduceLeft方法接受一个合并函数，依次遍历合并。第一个参数是合并后的值，第二个参数是下一个需要合并的值。
-                        </p>
-                        <p>
-                            将reduceLeft(_ + _)修改为foldLeft(0)(_ + _)。foldLeft比将reduceLeft更常用，因为他可以提供一个初始参数。
-                        </p>
-                        <p>
-                            Map和foldLeft可以代替大部分需要for循环的操作，并且使代码更清晰
+                           <span class="important"> 使用高阶方法可以代替大部分需要循环的操作，使代码更清晰</span>
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -990,7 +978,8 @@ println("wordcount:" + num)
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg",
+  "error 2013 msg", "warn 2013 msg")
 
 def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
@@ -1018,13 +1007,14 @@ println("wordcount:" + num)
                             尾递归
                         </h2>
                         <p>
-                            这个例子是用尾递归实现foldLeft。尾递归是递归的一种，特点在于会在函数的最末调用自身。
+                        尾递归是递归的一种，特点在于会在函数的最末调用自身。尾递归是函数式编程的常见写法。
+                        </p>
+                       <p> 这个例子是foldLeft的尾递归实现。foldLeft和reduceLeft相比更常用，多一个初始参数。 </p>
+                        <p>
+                            当用List做match case时。可以使用 :: 来解构。返回第一个元素head和剩余元素tail。
                         </p>
                         <p>
-                            当用List做match case时。可以使用 :: 来解构。返回第一个元素head，和剩余元素tail。
-                        </p>
-                        <p>
-                            尾递归会在编译期优化，因此不用担心一般递归造成的栈溢出问题。
+                            注：尾递归会在编译期优化，因此不用担心递归造成的栈溢出问题。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -1043,7 +1033,8 @@ println("wordcount:" + num)
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg",
+  "error 2013 msg", "warn 2013 msg")
 
 def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
@@ -1068,10 +1059,10 @@ println("wordcount:" + num)
                             更强大的For循环
                         </h2>
                         <p>
-                            循环语句是指令式编程的特产，Scala对其加以改进，成为适应函数式风格的利器。
+                            循环语句是指令式编程的常见语句，Scala对其加以改进，成为适应函数式风格的利器。
                         </p>
                         <p>
-                            For循环也是有返回值的，其返回是一个List。在每一轮迭代中加入yield，yield后的值可以加入到List中。
+                            For循环也是有返回值的，返回的是一个List。在每一轮迭代中加入yield，yield后的值可以加入到List中。
                         </p>
                         <p>
                             这个例子是使用for循环代替map函数。
@@ -1106,6 +1097,8 @@ osName match {
 }
 
 println(osName.getOrElse("none"))
+
+osName.foreach(print _)
 </textarea>
                                     </form>
                                 </div>
@@ -1120,23 +1113,19 @@ println(osName.getOrElse("none"))
                             Option
                         </h2>
                         <p>
-                            NullException是Java中最常见的异常，要想避免他只有不断检查null。Scala提供了Option机制来解决。
+                           Scala提供了Option机制来解决，代码中不断检查null的问题。
                         </p>
                         <p>
-                            这个例子包装了可能返回null的getProperty方法，使其返回一个Option。
-                        </p>
-                        <p>
-                            这样就可以不再漫无目的地null检查。只要Option类型的值即可。
+                            这个例子包装了getProperty方法，使其返回一个Option。 这样就可以不再漫无目的地null检查。只要Option类型的值即可。
                         </p>
                         <p>
                             使用pattern match来检查是常见做法。也可以使用getOrElse来提供当为None时的默认值。
                         </p>
                         <p>
-                            给力的是Option还可以看作是最大长度为1的List，其的强大功能都可以使用。
+                            给力的是Option还可以看作是最大长度为1的List，List的强大功能都可以使用。
                         </p>
-                        <p>
-                            尝试在最后添加 osName.foreach(print _) 。
-                        </p>
+
+                        <p>再见 NullException </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
@@ -1162,7 +1151,9 @@ class ScalaCurrentVersion(val url: String) {
   lazy val majorVersion = source.find(_.contains("version.major"))
   lazy val minorVersion = source.find(_.contains("version.minor"))
 }
-val version = new ScalaCurrentVersion("https://raw.github.com/scala/scala/master/build.number")
+
+val version = new ScalaCurrentVersion(
+  "https://raw.github.com/scala/scala/master/build.number")
 println("get scala version from " + version.url)
 version.majorVersion.foreach(println _)
 version.minorVersion.foreach(println _)
@@ -1180,19 +1171,18 @@ version.minorVersion.foreach(println _)
                             Lazy初始化
                         </h2>
                         <p>
-                            Lazy可以延迟初始化。加上lazy的字段会在第一次访问的时候初始化。
+                            Lazy可以延迟初始化字段。加上lazy的字段会在第一次访问的时候初始化，而不是类初始化的时候初始化。
                         </p>
                         <p>
-                            这个例子是从github获得Scala的版本号，由于访问网络需要较多时间。
+                            这个例子是从github获得Scala的版本号，由于访问网络需要较多时间。可以使用lazy来延迟获取。
+                            防止可能的浪费。
                         </p>
+                        <p>Lazy非常适合于初始化非常耗时的场景</p>
                         <p>
-                            如果费尽力气获取到，而调用它的代码却不去访问就会很浪费。
-                        </p>
-                        <p>
-                            可以使用lazy来延迟获取。
+                            
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/funtional-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a><a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1201,7 +1191,7 @@ version.minorVersion.foreach(println _)
                 <div class="chapter">
                     <h2>
                         并发
-                    </h2><a class="btn btn-primary btn-large" href="#/using-actor">进入</a>
+                    </h2><a class="btn btn-primary btn-large next-step">进入</a>
                 </div>
             </div>
             <div id="concurrency-contents" class="step contents slide deeply" data-x="-3500" data-y="1000" data-z="-3000" data-scale="1">
@@ -1234,11 +1224,12 @@ version.minorVersion.foreach(println _)
                         <li>
                             <a href="#/remote-actor">远程Actor</a>
                         </li>
-                        <li class="overview-li">
-                            <a href="#/overview">概览</a>
-                        </li>
+                        
                     </ul>
-                </div>
+                </div><div class="step-nav">
+                           <a class="btn" type="button" href="#/overview"><i class="icon-arrow-up">&nbsp;</i>概览</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                 </div>
             </div>
             <div id="using-actor" class="step slide deeply" data-x="-2000" data-y="1000" data-z="-3000">
                 <div class="row-fluid">
@@ -1252,11 +1243,13 @@ version.minorVersion.foreach(println _)
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.actors.Actor
+import scala.actors.Exit
 
 class EchoServer extends Actor {
   def act = loop {
     react {
-      case msg =&gt; println("echo " + msg)
+      case msg:String =&gt; println("echo " + msg)
+      case Exit =&gt; exit()
     }
   }
   start
@@ -1264,6 +1257,7 @@ class EchoServer extends Actor {
 
 val echoServer = new EchoServer
 echoServer ! "hi"
+echoServer ! Exit
 </textarea>
                                     </form>
                                 </div>
@@ -1281,7 +1275,7 @@ echoServer ! "hi"
                             Actor是Scala的并发模型。Actor是类似线程的实体，有一个邮箱。
                         </p>
                         <p>
-                            可以通过重载act来执行，react获取邮箱消息，！向邮箱发送消息。
+                            可以通过重载act来执行，<span class="important">react</span>获取邮箱消息，<span class="important">！</span>向邮箱发送消息。
                         </p>
                         <p>
                             这个例子是一个EchoServer，接受信息并打印。
@@ -1304,15 +1298,20 @@ echoServer ! "hi"
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.actors.Actor._
+import scala.actors.Exit
 
 val echoServer = actor {
   loop {
     react {
-      case msg =&gt; println("echo " + msg)
+      case msg:String =&gt; println("echo " + msg)
+      case Exit =&gt; exit()
     }
   }
 }
 echoServer ! "hi"
+echoServer ! Exit
+
+
 </textarea>
                                     </form>
                                 </div>
@@ -1330,13 +1329,13 @@ echoServer ! "hi"
                             可以通过更简化的办法声明Actor。
                         </p>
                         <p>
-                            导入scala.actors.Actor.中的actor函数。
+                            通过
+<pre>import scala.actors.Actor._</pre>
+
+                             <p> 导入scala.actors.Actor.中的actor函数。这个函数可以返回一个Actor。
                         </p>
                         <p>
-                            这个函数可以接受一个表达式返回Actor。
-                        </p>
-                        <p>
-                            react和一般的函数不同，他不会返回。需要用loop函数来循环调用它。
+                            react和一般的函数不同，他不会返回(就像抛出异常一样)。所以需要用loop函数来循环调用它。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -1356,19 +1355,22 @@ echoServer ! "hi"
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.actors.Actor._
+import scala.actors.Exit
 import scala.util.Random
 
 def echoServer(name: String) = actor {
   loop {
     react {
-      case msg =&gt; println("server" + name + " echo " + msg +
+      case msg:String =&gt; println("server" + name + " echo " + msg +
         " by " + Thread.currentThread())
+      case Exit =&gt; exit()
     }
   }
 }
 
 val echoServers = (1 to 4).map(x =&gt; echoServer(x.toString))
 (1 to 10).foreach(msg =&gt; echoServers(Random.nextInt(4)) ! msg.toString)
+echoServers.foreach(_ ! Exit)
 </textarea>
                                     </form>
                                 </div>
@@ -1383,15 +1385,14 @@ val echoServers = (1 to 4).map(x =&gt; echoServer(x.toString))
                             Actor原理
                         </h2>
                         <p>
-                            Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor直接可以复用线程。
+                            Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor直接可以<span class="important">复用线程</span>。
                         </p>
                         <p>
-                            这个例子创建4个Actor，每次调用的时候打印自身线程。
+                            这个例子创建4个Actor，每次调用的时候打印自身线程名称。
                         </p>
                         <p>
                             可以发现Actor和线程之间没有任何固定的对应关系。
-                        </p>
-                        <p>
+                        
                             一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
                         </p>
                         <div class="step-nav">
@@ -1412,19 +1413,23 @@ val echoServers = (1 to 4).map(x =&gt; echoServer(x.toString))
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.actors.Actor._
+import scala.actors.Exit
 
 val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
 
 val fromURL = actor {
   loop {
     react {
-      case url: String =&gt; reply(scala.io.Source.fromURL(url).getLines().mkString("\n"))
+      case url: String =&gt; reply(scala.io.Source.fromURL(url)
+        .getLines().mkString("\n"))
+      case Exit =&gt; exit()
     }
   }
 }
 
-val version = fromURL !？ versionUrl
+val version = fromURL !? versionUrl
 println(version)
+fromURL ! Exit
 </textarea>
                                     </form>
                                 </div>
@@ -1445,11 +1450,13 @@ println(version)
                             这个例子通过reply返回，通过!?同步发送并获取消息。使用时类似一个函数调用。
                         </p>
                         <p>
-                            将!?修改为!!，可以返回一个future。future是一个函数，可以调用查看结果。
+                            试着将<span class="important">!?</span>修改为<span class="important">!!</span>，这样可以返回一个future。future是一个函数，可以调用查看结果。需要将
                         </p>
+                        <pre>println(version)</pre>
                         <p>
-                            将println(version)修改为println(version())
+                            修改为
                         </p>
+                        <pre>println(version())</pre>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
@@ -1468,21 +1475,23 @@ println(version)
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.actors.Actor._
+import scala.actors.TIMEOUT
+
 val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
 val fromURL = actor {
-  loop {
-    react {
-      case (url: String, relayer: scala.actors.Actor) =&gt;
-        relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
-    }
+  react {
+    case (url: String, relayer: scala.actors.Actor) =&gt;
+      relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
   }
 }
-fromURL ! (versionUrl, actor {
-  reactWithin(1000) {
+fromURL ! ((versionUrl, actor {
+  reactWithin(5000) {
     case msg: String =&gt; println(msg)
     case TIMEOUT =&gt; println("timeout")
   }
-})
+}))
+
+
 </textarea>
                                     </form>
                                 </div>
@@ -1497,13 +1506,13 @@ fromURL ! (versionUrl, actor {
                             异步返回
                         </h2>
                         <p>
-                            异步操作可以最大发挥CPU效能。最佳的办法是在消息中包含需要回调Actor。
+                            异步操作可以最大发挥效能。使用异步最佳的办法是在消息中包含需要回调Actor。
                         </p>
                         <p>
                             这个例子通过传入一个actor达到异步调用。
                         </p>
                         <p>
-                            当react不在loop中时，有必要使用reactWithin检测超时。
+                            当react不在loop中时，可以使用reactWithin检测超时。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -1522,13 +1531,15 @@ fromURL ! (versionUrl, actor {
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val urls = "http://scala-lang.org" :: "https://github.com/yankay/scala-tour" :: Nil
+val urls = List("http://scala-lang.org",
+  "https://github.com/yankay/scala-tour")
 
-def fromURL(url: String) = scala.io.Source.fromURL(url).getLines().mkString("\n")
+def fromURL(url: String) = scala.io.Source.fromURL(url)
+  .getLines().mkString("\n")
 
-val s = System.currentTimeMillis()
-time(urls.map(fromURL(_)))
-println("time: " + (System.currentTimeMillis - s) + "ms")
+val t = System.currentTimeMillis()
+urls.map(fromURL(_))
+println("time: " + (System.currentTimeMillis - t) + "ms")
 </textarea>
                                     </form>
                                 </div>
@@ -1543,13 +1554,14 @@ println("time: " + (System.currentTimeMillis - s) + "ms")
                             并行集合
                         </h2>
                         <p>
-                            这个例子是访问若干URL，并记录时间。
+                            这个例子是访问若干URL，并记录时间。如果能并行访问，就可以大幅提高性能。
                         </p>
+                        
+                            
+                        
                         <p>
-                            如果能并行访问，就可以大幅提高性能。
-                        </p>
-                        <p>
-                            尝试将urls.map修改为urls.par.map。这样每个map中的函数都可以并发执行。
+                            尝试将</p><pre>urls.map</pre><p>修改为</p><pre>urls.par.map</pre>
+                        <p>这样每个map中的函数都可以并发执行。
                         </p>
                         <p>
                             当函数式和并发结合，就会这样让人兴奋。
@@ -1571,7 +1583,8 @@ println("time: " + (System.currentTimeMillis - s) + "ms")
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-val file = List("warn 2013 msg", "warn 2012 msg", "error 2013 msg", "warn 2013 msg")
+val file = List("warn 2013 msg", "warn 2012 msg",
+  "error 2013 msg", "warn 2013 msg")
 
 def wordcount(str: String): Int = str.split(" ").count("msg" == _)
 
@@ -1601,7 +1614,7 @@ println("wordcount:" + num)
                             在前面有一个wordcount例子，也可以用并行集合加以实现。
                         </p>
                         <p>
-                            不增加程序复杂性，却能大幅提高程序利用多核的能力。
+                            不增加程序复杂性，却能大幅提高利用多核的能力。
                         </p>
                         <div class="step-nav">
                             <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
@@ -1623,28 +1636,25 @@ println("wordcount:" + num)
 import scala.actors.remote.RemoteActor._
 import scala.actors.Actor._
 import scala.actors.remote.Node
-import scala.util.Random
-import java.util.Date
 
-val port = 5001 + Random.nextInt(65535 - 5001)
+val port = 31241
 
-val timeServer = actor {
+val echoServer = actor {
   alive(port)
-  register('timeServer, self)
+  register('echoServer, self)
   loop {
     react {
-      case msg =&gt; {
-        println(msg)
-        reply(System.currentTimeMillis())
+      case msg => {
+        reply("replay " + msg)
       }
     }
   }
 }
 
-val timeServerClient = select(Node("127.0.0.1", port), 'timeServer)
+val timeServerClient = select(Node("127.0.0.1", port), 'echoServer)
 
-timeServer !? "give me time" match {
-  case time: Long =&gt; println(new Date(time))
+timeServerClient !? "hi" match {
+  case replay: String => println(replay)
 }
 </textarea>
                                     </form>
@@ -1666,10 +1676,10 @@ timeServer !? "give me time" match {
                             这个例子创建一个时间服务器，通过alive来监听TCP端口，register来注册自己。
                         </p>
                         <p>
-                            调用时通过select创建client.其余和普通Actor一样。
+                            调用时通过select创建client。其余使用方式和普通Actor一样。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/concurrency-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a><a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1678,7 +1688,7 @@ timeServer !? "give me time" match {
                 <div class="chapter">
                     <h2>
                         实践
-                    </h2><a class="btn btn-primary btn-large" href="#/using-java">进入</a>
+                    </h2><a class="btn btn-primary btn-large next-step">进入</a>
                 </div>
             </div>
             <div id="practice-contents" class="step contents slide deeply" data-x="-3500" data-y="2500" data-z="-3000" data-scale="1">
@@ -1688,34 +1698,35 @@ timeServer !? "give me time" match {
                     </h2>
                     <ul>
                         <li>
-                            <a href="using-java">使用Java</a>
+                            <a href="#/using-java">使用Java</a>
                         </li>
                         <li>
-                            <a href="equality">相等性</a>
+                            <a href="#/equality">相等性</a>
                         </li>
                         <li>
-                            <a href="extractor">抽取器</a>
+                            <a href="#/extractor">抽取器</a>
                         </li>
                         <li>
-                            <a href="memory-pattern">记忆模式</a>
+                            <a href="#/memory-pattern">记忆模式</a>
                         </li>
                         <li>
-                            <a href="implicit-conversion">隐式转换</a>
+                            <a href="#/implicit-conversion">隐式转换</a>
                         </li>
                         <li>
-                            <a href="dsl">DSL</a>
+                            <a href="#/dsl">DSL</a>
                         </li>
                         <li>
-                            <a href="test">测试</a>
+                            <a href="#/test">测试</a>
                         </li>
                         <li>
-                            <a href="simple-build-tool">Simple Build Tool</a>
+                            <a href="#/simple-build-tool">Simple Build Tool</a>
                         </li>
-                        <li class="overview-li">
-                            <a href="#/overview">概览</a>
-                        </li>
+                      
                     </ul>
-                </div>
+                </div><div class="step-nav">
+                           <a class="btn" type="button" href="#/overview"><i class="icon-arrow-up">&nbsp;</i>概览</a>
+                            <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                 </div>
             </div>
             <div id="using-java" class="step slide deeply" data-x="-2000" data-y="2500" data-z="-3000">
                 <div class="row-fluid">
@@ -1731,7 +1742,7 @@ timeServer !? "give me time" match {
 import org.apache.commons.beanutils.BeanUtils
 import scala.beans.BeanProperty
 
-class SimpleBean( var name: String) {
+class SimpleBean(var name: String) {
 }
 
 val bean = new SimpleBean("foo")
@@ -1751,19 +1762,22 @@ println(BeanUtils.describe(bean))
                             使用Java
                         </h2>
                         <p>
-                            Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
+                            Scala和Java可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
                         </p>
                         <p>
                             同样Java也可以使用Scala。这个例子演示使用@BeanProperty注解来生成Java Style的Bean。
                         </p>
-                        <p>
-                            尝试将在var name前加上@BeanProperty。这样就给bean添加了getter/setter
-                        </p>
-                        <p>
+                        
+                            <p>尝试将</p>
+                            <pre>var name: String</pre>
+                              <p>修改为</p>
+                            <pre>@BeanProperty var name: String</pre>
+
+                             <p>这样就给bean添加了getter/setter。                 
                             Apache BeanUtils就可以正常工作。
                         </p>
                         <div class="step-nav">
-                            <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1801,25 +1815,19 @@ println(new Person("Black") == new Person("Black"))
                             相等性
                         </h2>
                         <p>
-                            Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
-                        </p>
-                        <p>
-                            在Scala中==操作等效于equals，这一点和Java不同。更自然一些。
-                        </p>
-                        <p>
-                            这个例子定义了一个equals函数，并验证。
+                            在Scala中<span class="important">==等效于equals</span>，这一点和Java不同。更自然一些。
                         </p>
                         <p>
                             写一个完全正确的equal函数并不容易，这个例子也有子类会不对称的Bug。
                         </p>
                         <p>
-                            尝试将class修改为case class并删除equals函数。
+                            尝试将class修改为case class,并删除equals函数。
                         </p>
                         <p>
                             case类会自动生成正确的equals函数。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1835,10 +1843,11 @@ println(new Person("Black") == new Person("Black"))
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-object Email {
-  def apply(user: String, domain: String) = user + "@" + domain
+import scala.util.matching.Regex
 
-  def unapply(str: String) = new Regex("""(.*)@(.*)""").unapplySeq(str).get match {
+object Email {
+  def unapply(str: String) = new Regex("""(.*)@(.*)""")
+    .unapplySeq(str).get match {
     case user :: domain :: Nil =&gt; Some(user, domain)
     case _ =&gt; None
   }
@@ -1861,25 +1870,23 @@ object Email {
                             抽取器
                         </h2>
                         <p>
-                            Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
-                        </p>
-                        <p>
-                            抽取器可以帮助pattern match进行解构。
+                            抽取器可以帮助模式匹配进行解构。
                         </p>
                         <p>
                             这个例子是构建一个Email抽取器，只要实现unapply函数就可以了。
                         </p>
                         <p>
-                            Scala的正则表达式会自带抽取器，可以抽取出一个List。List的元素是匹配()里的表达式。
+                            Scala的正则表达式会自带抽取器，可以抽取出一个List。List里的元素是匹配()里的表达式。
                         </p>
                         <p>
                             抽取器很有用，短短的例子里就有两处使用抽取器：
                         </p>
-                        <p>
-                            case user :: domain :: Nil解构List；case Email(user, domain) 解构Email。
-                        </p>
+                        
+                           <pre>case user :: domain :: Nil</pre><p>解构List </p>
+                            <pre>case Email(user, domain)</pre><p>解构Email。</p>
+                        
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button" href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1896,17 +1903,16 @@ object Email {
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import scala.collection.mutable.WeakHashMap
+
 def memo[X, R](f: X =&gt; R) = {
   val cache = new WeakHashMap[X, R]
   (x: X) =&gt; cache.getOrElseUpdate(x, f(x))
 }
-
 def fibonacci_(in: Int): Int = in match {
   case 0 =&gt; 0;
   case 1 =&gt; 1;
   case n: Int =&gt; fibonacci_(n - 1) + fibonacci_(n - 2)
 }
-
 val fibonacci: Int =&gt; Int = memo(fibonacci_)
 
 val t1 = System.currentTimeMillis()
@@ -1930,9 +1936,6 @@ println("it takes " + (System.currentTimeMillis() - t2) + "ms")
                             记忆模式
                         </h2>
                         <p>
-                            Scala可以非常方便的互操作，前面已经有大量Scala直接使用Java的例子。
-                        </p>
-                        <p>
                             记忆模式可以解决手动编写存取cache代码的麻烦。
                         </p>
                         <p>
@@ -1942,10 +1945,14 @@ println("it takes " + (System.currentTimeMillis() - t2) + "ms")
                             还是斐波那契的例子，通过cache可以使性能提高。
                         </p>
                         <p>
-                            尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改fibonacci(n - 1) + fibonacci(n - 2)，可以提高更多。
-                        </p>
+                            尝试将  </p>
+                            <pre>fibonacci_(n - 1) + fibonacci_(n - 2)</pre>
+                                 <p>修改为  </p>
+                                <pre>fibonacci(n - 1) + fibonacci(n - 2)</pre>
+                                 <p>可以提高更多性能。</p>
+                      
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -1961,7 +1968,10 @@ println("it takes " + (System.currentTimeMillis() - t2) + "ms")
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-implicit def strToDate(str: String) = new SimpleDateFormat("yyyy-MM-dd").parse(str)
+import java.text.SimpleDateFormat
+
+implicit def strToDate(str: String) = 
+  new SimpleDateFormat("yyyy-MM-dd").parse(str)
 
 println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
 </textarea>
@@ -1978,13 +1988,13 @@ println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
                             隐式转换
                         </h2>
                         <p>
-                            implicit可以定义一个转换函数，可以在下面的使用到的时候自动转换。
+                            implicit可以定义一个转换函数，可以在使用相应类型的时候自动转换。
                         </p>
                         <p>
                             这个例子可以将String自动转换为Date类型。隐式转换时实现DSL的重要工具。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -2002,12 +2012,13 @@ println("2013-01-01 unix time: " + "2013-01-01".getTime()/1000l)
                                         <textarea class="editor" spellcheck="false">
 import org.json4s._
 import org.json4s.JsonDSL._
-
 import org.json4s.jackson.JsonMethods._
+import java.util.Date
 
 case class Twitter(id: Long, text: String, publishedAt: Option[java.util.Date])
 
-var twitters = Twitter(1, "hello scala", Some(new Date())) :: Twitter(2, "I like scala tour", None) :: Nil
+var twitters = Twitter(1, "hello scala", Some(new Date())) ::
+  Twitter(2, "I like scala tour", None) :: Nil
 
 var json = ("twitters"
   -&gt; twitters.map(
@@ -2030,16 +2041,16 @@ println(pretty(render(json)))
                             DSL
                         </h2>
                         <p>
-                            DSL是Scala最强大武器，Scala可以使一些描述性代码变得极为简单。
+                            DSL是Scala最强大武器，可以使一些描述性代码变得极为简单。
                         </p>
                         <p>
                             这个例子是使用DSL生成JSON。Scala很多看似是语言级的特性也是用DSL做到的。
                         </p>
                         <p>
-                            自己编写DSL有点复杂，但使用方便灵活的。
+                            自己编写DSL有点复杂，但使用起来非常方便。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -2066,7 +2077,7 @@ class FactorialSpec extends Specification {
     "factorial 3 must be 6" in {
       factorial(3) mustEqual 6
     }
-    "factorial 4 must be 6" in {
+    "factorial 4 must greaterThan 6" in {
       factorial(4) must greaterThan(6)
     } 
   }
@@ -2086,7 +2097,7 @@ specs2.run(new FactorialSpec)
                             测试
                         </h2>
                         <p>
-                            Scala DSL可以使测试更方便。
+                            Scala可以使用Spec2，ScalaTest来测试， DSL可以使测试更方便。
                         </p>
                         <p>
                             这个例子是测试一个阶乘函数。使用should/in来建立测试用例。
@@ -2095,7 +2106,7 @@ specs2.run(new FactorialSpec)
                             测试是默认并发执行的。
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a> <a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -2104,9 +2115,7 @@ specs2.run(new FactorialSpec)
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="workspace">
-                            <div class="controls">
-                                <button type="button" class="run btn btn-primary" title="Compile and Run">Run</button>
-                            </div>
+
                             <div class="workspace-top">
                                 <div class="workspace-editor">
                                     <form>
@@ -2138,13 +2147,13 @@ sbt\sbt stage
                             SBT是Scala的最佳编译工具，在他的帮助下，
                         </p>
                         <p>
-                            你甚至不需要安装除JRE外的任何东西，来开发Scala。
+                            你甚至<span class="important">不需要安装</span>除JRE外的任何东西，来开发Scala。
                         </p>
                         <p>
-                            例如你想在自己的机器上执行这个Scala-Tour
+                            例如你想在自己的机器上执行这个Scala-Tour,可以执行左边的命令
                         </p>
                         <div class="step-nav">
-                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"><i class="icon-arrow-up">&nbsp;</i>目录</a>
+                            <a class="btn pre-step" type="button"><i class="icon-arrow-left">&nbsp;</i>上一页</a> <a class="btn" type="button"  href="#/practice-contents"><i class="icon-arrow-up">&nbsp;</i>目录</a><a class="btn next-step" type="button"><i class="icon-arrow-right">&nbsp;</i>下一页</a>
                         </div>
                     </div>
                 </div>
@@ -2201,10 +2210,7 @@ if ("ontouchstart" in document.documentElement) {
         </script> <script src="js/jquery.min.js">
 </script> <script src="js/bootstrap.js">
 </script> <script src="js/impress.js">
-</script> <script>
-document.getElementById("body").className=document.getElementById("body").className.replace('onload',' ');
-        impress().init();
-        </script> <script src="js/codemirror.min.js">
+</script>  <script src="js/codemirror.min.js">
 </script> <script src="js/matchbrackets.js">
 </script> <script src="js/clike.js">
 </script> <script src="js/scala-tour.js">

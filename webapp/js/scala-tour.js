@@ -15,7 +15,7 @@ function runFunc(codeStr, outputDiv) {
         setOutput(outputDiv, null, null, data.Errors);
         return;
       }
-      setOutput(outputDiv, data.Events,data.ErrEvents, false);
+      setOutput(outputDiv, data.Events, data.ErrEvents, false);
     },
     error: function() {
       outputDiv.addClass("error").text(
@@ -24,7 +24,7 @@ function runFunc(codeStr, outputDiv) {
   });
 }
 
-function setOutput(output, events,errevents, error) {
+function setOutput(output, events, errevents, error) {
   output.empty();
   if (events) {
 
@@ -39,10 +39,10 @@ function setOutput(output, events,errevents, error) {
       msg += errevents[i] + "\n"
     }
 
-    if(msg != ""){
-        var err = $('<span class="err"/>');
-        err.text(msg);
-        err.appendTo(output);
+    if (msg != "") {
+      var err = $('<span class="err"/>');
+      err.text(msg);
+      err.appendTo(output);
     }
 
     var exit = $('<span class="exit"/>');
@@ -59,18 +59,14 @@ function setOutput(output, events,errevents, error) {
   }
 }
 
-var editors = {}
+var editors = []
+var editorsMap = {}
 
 $(".run").click(function() {
   var editorText = $(this).parent().parent().parent().find(".editor");
   var outputDiv = $(this).parent().parent().parent().find(".output");
   loading(outputDiv);
-  var k = -1
-  var editorTexts = $(".editor")
-  for (var i = 0; i < editorTexts.length; i++) {
-    if (getElementPath(editorText) == getElementPath(editorTexts[i])) k = i
-  }
-  var editor = editors[k]
+  var editor = editorsMap[getElementPath(editorText)]
   runFunc(editor.getValue(), outputDiv.find("pre"));
 });
 
@@ -86,11 +82,19 @@ function getElementPath(element) {
 }
 
 
-var textareas = document.getElementsByClassName("editor")
-var editors = []
 
+document.addEventListener("impress:add-active", function(event) {
+  //restore
+  var editorsRemove=[]
 
-$(window).load(function() {
+  for(var i = 0; i < editors.length; i++){
+    var editor=editors[i]
+    editorsRemove.push(editor)    
+  }
+  editors = []
+  editorsMap = {}
+  //add
+  var textareas = $(".active .editor").get()
   for (var i = 0; i < textareas.length; i++) {
     var textarea = textareas[i]
     var editor = CodeMirror.fromTextArea(textarea, {
@@ -103,8 +107,34 @@ $(window).load(function() {
       smartIndent :false,
       lineNumbers: false
     });
-    editors[i] = editor
+    editors.push(editor)
+    editorsMap[getElementPath(textarea)]=editor
   }
 
-});
+  for(var i = 0; i < editorsRemove.length; i++){
+    var editor=editorsRemove[i]    
+    window.setTimeout(function() {
+      editor.save()    
+      editor.toTextArea()
+    }, 1000 /* but after 2000 ms */);
+  }
 
+
+}, false);
+
+
+document.getElementById("body").className = document.getElementById("body").className.replace('onload', ' ');
+impress().init();
+
+
+
+// var textareas = document.getElementsByClassName("editor")
+
+
+// $(window).load(function() {
+
+
+
+
+
+// });

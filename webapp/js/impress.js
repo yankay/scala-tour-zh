@@ -446,10 +446,11 @@
             if ( activeStep ) {
                 activeStep.classList.remove("active");
                 body.classList.remove("impress-on-" + activeStep.id);
+                triggerEvent(activeStep, "impress:remove-active");
             }
             el.classList.add("active");
-            
             body.classList.add("impress-on-" + el.id);
+            triggerEvent(el, "impress:add-active");
             
 
             var deeps=document.getElementsByClassName("deeply")

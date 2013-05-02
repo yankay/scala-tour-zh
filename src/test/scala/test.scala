@@ -2,28 +2,21 @@
 import java.util.Date
 import scala.runtime.RichInt
 import scala.runtime.RichInt
+import java.text.SimpleDateFormat
 
 object test {
   def main(args: Array[String]) {
+
+    import scala.actors.remote.RemoteActor._
+    import scala.actors.Actor._
+    import scala.actors.remote.Node
+
+    implicit def strToDate(str: String) =
+      new SimpleDateFormat("yyyy-MM-dd").parse(str)
+
+    println("2013-01-01 unix time: " + "2013-01-01".getTime() / 1000l)
+
   }
-  import org.specs2.mutable._
-
-  class FactorialSpec extends Specification {
-    args.report(color = false)
-
-    def factorial(n: Int) = (1 to n).reduce(_ * _)
-
-    "The 'Hello world' string" should {
-      "factorial 3 must be 6" in {
-        factorial(3) mustEqual 6
-      }
-      "factorial 4 must be 6" in {
-        factorial(4) must greaterThan(6)
-      } 
-    }
-  }
-  specs2.run(new FactorialSpec)
-
 }
 
 
