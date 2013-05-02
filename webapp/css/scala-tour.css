@@ -242,9 +242,9 @@ color: #222;
 	font-size: 160px;
 }
 
-.chapter .btn-primary{
-	margin-left: 400px;
-	margin-top: 50px;
+.chapter .btn{
+	margin-left: 20px;
+	margin-top: 150px;
 }
 
 .step-nav{

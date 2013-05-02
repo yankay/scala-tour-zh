@@ -2,7 +2,7 @@
 import java.util.Date
 import scala.runtime.RichInt
 import scala.runtime.RichInt
-import java.text.SimpleDateFormat
+
 
 object test {
   def main(args: Array[String]) {
