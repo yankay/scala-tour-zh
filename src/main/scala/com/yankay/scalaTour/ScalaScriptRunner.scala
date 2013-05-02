@@ -51,7 +51,12 @@ object ScalaScriptCompiler {
   def compile(script: String, err: OutputStream): Option[File] = {
     val scriptFile = File.makeTemp("scala-script", ".scala")
     // save the command to the file
-    scriptFile writeAll "com.yankay.scalaTour.PerpareScript.perpare\n"
+    scriptFile writeAll """import scala.io.Codec
+    import java.nio.charset.CodingErrorAction
+    implicit val codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+    """
     scriptFile writeAll script
     try compile(scriptFile, err)
     finally scriptFile.delete() // in case there was a compilation error
