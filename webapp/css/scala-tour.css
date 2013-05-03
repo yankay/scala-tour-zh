@@ -313,3 +313,7 @@ line-height: 2;
 .important{
 	 font-weight:bold;
 }
+
+#disqus_thread {
+	height:600px;
+}
