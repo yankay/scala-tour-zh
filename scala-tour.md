@@ -450,67 +450,76 @@ version.minorVersion.foreach(println _)
 
 ### 使用Actor
 
-Actor是Scala的并发模型。Actor是类似线程的实体，有一个邮箱。
-可以通过重载act来执行，react获取邮箱消息，！向邮箱发送消息。
+Actor是Scala的并发模型。在2.10之后的版本中，使用[http://akka.io/](Akka)作为其推荐Actor实现。
+Actor是类似线程的实体，有一个邮箱。
+可以通过system.actorOf来创建,receive获取邮箱消息，！向邮箱发送消息。
 这个例子是一个EchoServer，接受信息并打印。
 
 ```
-import scala.actors.Actor
+import akka.actor.{ Actor, ActorSystem, Props }
+
+val system = ActorSystem()
 
 class EchoServer extends Actor {
-  def act = loop {
-    react {
-      case msg => println("echo " + msg)
-    }
+  def receive = {
+    case msg: String => println("echo " + msg)
   }
-  start
 }
 
-val echoServer = new EchoServer
+val echoServer = system.actorOf(Props[EchoServer])
 echoServer ! "hi"
+
+system.shutdown
 ```
 
 ### Actor更简化的用法
 
 可以通过更简化的办法声明Actor。
-导入scala.actors.Actor.中的actor函数。
-这个函数可以接受一个表达式返回Actor。
-react和一般的函数不同，他不会返回。需要用loop函数来循环调用它。
+导入akka.actor.ActorDSL中的actor函数。
+这个函数可以接受一个Actor的构造器Act，启动并返回Actor。
 
 
 ```
-import scala.actors.Actor._
+import akka.actor.ActorDSL._
+import akka.actor.ActorSystem
 
-val echoServer = actor {
-  loop {
-    react {
-      case msg => println("echo " + msg)
-    }
+implicit val system = ActorSystem()
+
+val echoServer = actor(new Act {
+  become {
+    case msg => println("echo " + msg)
   }
-}
+})
 echoServer ! "hi"
+system.shutdown
 ```
 ### Actor原理
-Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor直接可以复用线程。
+Actor比线程轻量。在Scala中可以创建数以百万级的Actor。奥秘在于Actor可以复用线程。
+Actor和线程是不同的抽象，他们的对应关系是由Dispatcher决定的。
 这个例子创建4个Actor，每次调用的时候打印自身线程。
-可以发现Actor和线程之间没有任何固定的对应关系。
+可以发现Actor和线程之间没有一对一的对应关系。
 一个Actor可以使用多个线程，一个线程也会被多个Actor复用。
 
 ```
-import scala.actors.Actor._
-import scala.util.Random
+import akka.actor.{ Actor, Props, ActorSystem }
+import akka.testkit.CallingThreadDispatcher
 
-def echoServer(name: String) = actor {
-  loop {
-    react {
-      case msg => println("server" + name + " echo " + msg +
-        " by " + Thread.currentThread())
-    }
+implicit val system = ActorSystem()
+
+class EchoServer(name: String) extends Actor {
+  def receive = {
+    case msg => println("server" + name + " echo " + msg +
+      " by " + Thread.currentThread().getName())
   }
 }
 
-val echoServers = (1 to 4).map(x => echoServer(x.toString))
-(1 to 10).foreach(msg => echoServers(Random.nextInt(4)) ! msg.toString)
+val echoServers = (1 to 10).map(x =>
+  system.actorOf(Props(new EchoServer(x.toString))
+    .withDispatcher(CallingThreadDispatcher.Id)))
+(1 to 10).foreach(msg =>
+  echoServers(scala.util.Random.nextInt(10)) ! msg.toString)
+
+system.shutdown
 ```
 
 
@@ -518,51 +527,59 @@ val echoServers = (1 to 4).map(x => echoServer(x.toString))
 ### 同步返回
 
 Actor非常适合于较耗时的操作。比如获取网络资源。
-这个例子通过reply返回，通过!?同步发送并获取消息。使用时类似一个函数调用。
-将!?修改为!!，可以返回一个future。future是一个函数，可以调用查看结果。
-将println(version)修改为println(version())
+这个例子通过调用ask函数来获取一个Future。
+在Actor内部通过 sender ! 传递结果。
+Future像Option一样有很多高阶方法，可以使用foreach查看结果。
 
 
 ```
-import scala.actors.Actor._
+import akka.actor.ActorDSL._
+import akka.pattern.ask
+
+implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
+implicit val system = akka.actor.ActorSystem()
 
 val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
 
-val fromURL = actor {
-  loop {
-    react {
-      case url: String => reply(scala.io.Source.fromURL(url).getLines().mkString("\n"))
-    }
+val fromURL = actor(new Act {
+  become {
+    case url: String => sender ! scala.io.Source.fromURL(url)
+      .getLines().mkString("\n")
   }
-}
+})
 
-val version = fromURL !？ versionUrl
-println(version)
+val version = fromURL.ask(versionUrl)(akka.util.Timeout(5 * 1000))
+version.foreach(println _)
+  
+system.shutdown
 ```
 
 ### 异步返回 
 
-异步操作可以最大发挥CPU效能。最佳的办法是在消息中包含需要回调Actor。
-这个例子通过传入一个actor达到异步调用。
-当react不在loop中时，有必要使用reactWithin检测超时。
+异步操作可以最大发挥效能。Scala的Futrue很强大，可以异步返回。
+可以实现Futrue的onComplete方法。当Futrue结束的时候就会回调。
+在调用ask的时候，可以设定超时。
 
 ```
-import scala.actors.Actor._
+import akka.actor.ActorDSL._
+import akka.pattern.ask
+
+implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
+implicit val system = akka.actor.ActorSystem()
+
 val versionUrl = "https://raw.github.com/scala/scala/master/starr.number"
-val fromURL = actor {
-  loop {
-    react {
-      case (url: String, relayer: scala.actors.Actor) =>
-        relayer ! scala.io.Source.fromURL(url).getLines().mkString("\n")
-    }
-  }
-}
-fromURL ! (versionUrl, actor {
-  reactWithin(1000) {
-    case msg: String => println(msg)
-    case TIMEOUT => println("timeout")
+
+val fromURL = actor(new Act {
+  become {
+    case url: String => sender ! scala.io.Source.fromURL(url)
+      .getLines().mkString("\n")
   }
 })
+
+val version = fromURL.ask(versionUrl)(akka.util.Timeout(5 * 1000))
+version onComplete {
+  case msg => println(msg); system.shutdown
+}
 ```
 ### 并发集合
 
@@ -605,36 +622,29 @@ println("wordcount:" + num)
 
 ### 远程Actor
 Actor是并发模型，也使用于分布式。
-这个例子创建一个时间服务器，通过alive来监听TCP端口，register来注册自己。
-调用时通过select创建client.其余和普通Actor一样。
+这个例子创建一个Echo服务器，通过actorOf来注册自己。
+然后在创建一个client，通过akka url来寻址。
+除了是通过url创建的，其他使用的方法和普通Actor一样。
 
 ```
-import scala.actors.remote.RemoteActor._
-import scala.actors.Actor._
-import scala.actors.remote.Node
-import scala.util.Random
-import java.util.Date
+import akka.actor.{ Actor, ActorSystem, Props }
 
-val port = 5001 + Random.nextInt(65535 - 5001)
+implicit val system = akka.actor.ActorSystem()
 
-val timeServer = actor {
-  alive(port)
-  register('timeServer, self)
-  loop {
-    react {
-      case msg => {
-        println(msg)
-        reply(System.currentTimeMillis())
-      }
-    }
+class EchoServer extends Actor {
+  def receive = {
+    case msg: String => println("echo " + msg)
   }
 }
 
-val timeServerClient = select(Node("127.0.0.1", port), 'timeServer)
+val server = system.actorOf(Props[EchoServer], name = "echoServer")
 
-timeServer !? "give me time" match {
-  case time: Long => println(new Date(time))
-}
+val echoClient = system
+  .actorFor("akka://RemoteSystem@127.0.0.1:2552/user/echoServer")
+echoClient ! "Hi Remote"
+
+system.shutdown
+
 ```
 
 ## 实践

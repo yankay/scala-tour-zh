@@ -1,22 +1,27 @@
 
-import java.util.Date
-import scala.runtime.RichInt
-import scala.runtime.RichInt
-
 
 object test {
   def main(args: Array[String]) {
 
-    import scala.actors.remote.RemoteActor._
-    import scala.actors.Actor._
-    import scala.actors.remote.Node
-
-    implicit def strToDate(str: String) =
-      new SimpleDateFormat("yyyy-MM-dd").parse(str)
-
-    println("2013-01-01 unix time: " + "2013-01-01".getTime() / 1000l)
-
   }
+  import akka.actor.{ Actor, ActorSystem, Props }
+
+  implicit val system = akka.actor.ActorSystem()
+
+  class EchoServer extends Actor {
+    def receive = {
+      case msg: String => println("echo " + msg)
+    }
+  }
+
+  val server = system.actorOf(Props[EchoServer], name = "echoServer")
+
+  val echoClient = system
+    .actorFor("akka://RemoteSystem@127.0.0.1:2552/user/echoServer")
+  echoClient ! "Hi Remote"
+
+  system.shutdown
+
 }
 
 
