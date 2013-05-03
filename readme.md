@@ -2,7 +2,8 @@
 
 A cooler tour the same as scala language 
 
-http://www.scala-tour.com/
+[http://zh.scala-tour.com/](http://zh.scala-tour.com/) 
+
 
 ## Compile And Run
  ```
