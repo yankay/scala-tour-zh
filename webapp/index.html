@@ -1273,11 +1273,11 @@ system.shutdown
                             使用Actor
                         </h2>
                         <p>
-                            Actor是Scala的并发模型。在2.10之后的版本中，使用<a href="http://akka.io/"  target="_blank">]Akka</a>作为其推荐Actor实现。
+                            Actor是Scala的并发模型。在2.10之后的版本中，使用<a href="http://akka.io/"  target="_blank">Akka</a>作为其推荐Actor实现。
                         </p>
                         <p>
                             Actor是类似线程的实体，有一个邮箱。
-可以通过system.actorOf来创建,<span class="important">receive</span>获取邮箱消息，<span class="important">！</span>向邮箱发送消息。
+Actor可以通过<span class="important">system.actorOf</span>来创建,<span class="important">receive</span>获取邮箱消息，<span class="important">！</span>向邮箱发送消息。
 
                         </p>
                         <p>
@@ -1300,20 +1300,20 @@ system.shutdown
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-import akka.actor.ActorDSL._
-import akka.actor.ActorSystem
+import akka.actor.{ Actor, ActorSystem, Props }
 
-implicit val system = ActorSystem()
+val system = ActorSystem()
 
-val echoServer = actor(new Act {
-  become {
-    case msg => println("echo " + msg)
+class EchoServer extends Actor {
+  def receive = {
+    case msg: String => println("echo " + msg)
   }
-})
+}
+
+val echoServer = system.actorOf(Props[EchoServer])
 echoServer ! "hi"
+
 system.shutdown
-
-
 </textarea>
                                     </form>
                                 </div>
@@ -1640,9 +1640,10 @@ println("wordcount:" + num)
                                     <form>
                                         <textarea class="editor" spellcheck="false">
 import akka.actor.{ Actor, ActorSystem, Props }
+import com.typesafe.config.ConfigFactory
 
-implicit val system = akka.actor.ActorSystem()
-
+implicit val system = akka.actor.ActorSystem("RemoteSystem",
+  ConfigFactory.load.getConfig("remote"))
 class EchoServer extends Actor {
   def receive = {
     case msg: String => println("echo " + msg)
