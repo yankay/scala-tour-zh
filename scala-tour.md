@@ -1,5 +1,7 @@
 # Scala 指南
 
+[http://zh.scala-tour.com/](http://zh.scala-tour.com/) 
+
 ## 基本
 
 ### 表达式和值
