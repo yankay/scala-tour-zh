@@ -1,6 +1,6 @@
 # Scala 指南
 
-[站点链接](http://zh.scala-tour.com/) 
+[http://zh.scala-tour.com/](http://zh.scala-tour.com/) 
 
 ## 基本
 
