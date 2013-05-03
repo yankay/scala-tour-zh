@@ -628,9 +628,10 @@ Actor是并发模型，也使用于分布式。
 
 ```
 import akka.actor.{ Actor, ActorSystem, Props }
+import com.typesafe.config.ConfigFactory
 
-implicit val system = akka.actor.ActorSystem()
-
+implicit val system = akka.actor.ActorSystem("RemoteSystem",
+  ConfigFactory.load.getConfig("remote"))
 class EchoServer extends Actor {
   def receive = {
     case msg: String => println("echo " + msg)

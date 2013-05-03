@@ -283,6 +283,10 @@ line-height: 2;
 background: rgba(255,255,255,0);
 }
 
+#using-actor a{
+background: rgba(255,255,255,0);
+}
+
 .contents h2{
 	font-size: 36px;
 	line-height: 2;
