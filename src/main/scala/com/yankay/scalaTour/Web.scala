@@ -21,6 +21,7 @@ import org.eclipse.jetty.servlets.GzipFilter
 import java.util.EnumSet
 import javax.servlet.DispatcherType
 import scala.collection.mutable.WeakHashMap
+import scala.util.matching.Regex
 
 object Web {
   val cache = new WeakHashMap[String, RunResponse]
@@ -59,7 +60,14 @@ class RunServlet extends HttpServlet {
     val error = new String(buffer.toByteArray()).lines.toList
     //    println(new String(buffer.toByteArray()))
     //    println(error);
-    val errorMsg = error.map(x => x.replaceAll("/tmp/scala-script.*scala", "main.scala"))
+    def replaceErrorCodeNum(src: String): String = {
+      val reg = new Regex("""main\.scala:([0-9]*): error:.*""")
+      reg.unapplySeq(src).getOrElse(src) match {
+        case l :: Nil => "main.scala:" + (l.toString.toInt - 8).toString + src.substring("main.scala:".length() + l.toString.length())
+        case _ => src
+      }
+    }
+    val errorMsg = error.map(x => x.replaceAll("/tmp/scala-script.*scala", "main.scala")).map(replaceErrorCodeNum)
 
     file match {
       case Some(f) => {
@@ -81,7 +89,7 @@ class RunServlet extends HttpServlet {
     proc match {
       case Some(p) => {
         val pid = p.run();
-        val timeout = new TimeoutActor(pid, 10*1000)
+        val timeout = new TimeoutActor(pid, 10 * 1000)
         timeout.start
         val existValue = pid.exitValue()
         timeout ! existValue
