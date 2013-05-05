@@ -1385,19 +1385,17 @@ system.shutdown
                                 <div class="workspace-editor">
                                     <form>
                                         <textarea class="editor" spellcheck="false">
-import akka.actor.{ Actor, ActorSystem, Props }
+import akka.actor.ActorDSL._
+import akka.actor.ActorSystem
 
-val system = ActorSystem()
+implicit val system = ActorSystem()
 
-class EchoServer extends Actor {
-  def receive = {
-    case msg: String =&gt; println("echo " + msg)
+val echoServer = actor(new Act {
+  become {
+    case msg => println("echo " + msg)
   }
-}
-
-val echoServer = system.actorOf(Props[EchoServer])
+})
 echoServer ! "hi"
-
 system.shutdown
 </textarea>
                                     </form>
