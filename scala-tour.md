@@ -714,14 +714,13 @@ object Email {
 记忆模式可以解决手动编写存取cache代码的麻烦。
 这个例子中，memo可以将一个不含cache函数，包装成一个含有cache功能的。
 还是斐波那契的例子，通过cache可以使性能提高。
-尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改fibonacci(n - 1) + fibonacci(n - 2)，可以提高更多。
+尝试将fibonacci_(n - 1) + fibonacci_(n - 2)修改memo(fibonacci_)(n - 1) + memo(fibonacci_)(n - 2)，可以提高更多。
 
 ```
 import scala.collection.mutable.WeakHashMap
-def memo[X, R](f: X => R) = {
-  val cache = new WeakHashMap[X, R]
-  (x: X) => cache.getOrElseUpdate(x, f(x))
-}
+
+val cache = new WeakHashMap[Int, Int]
+def memo(f: Int => Int) = (x: Int) => cache.getOrElseUpdate(x, f(x))
 
 def fibonacci_(in: Int): Int = in match {
   case 0 => 0;

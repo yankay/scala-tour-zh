@@ -2011,10 +2011,9 @@ case Email(user, domain)
                                         <textarea class="editor" spellcheck="false">
 import scala.collection.mutable.WeakHashMap
 
-def memo[X, R](f: X =&gt; R) = {
-  val cache = new WeakHashMap[X, R]
-  (x: X) =&gt; cache.getOrElseUpdate(x, f(x))
-}
+val cache = new WeakHashMap[Int, Int]
+def memo(f: Int => Int) = (x: Int) => cache.getOrElseUpdate(x, f(x))
+
 def fibonacci_(in: Int): Int = in match {
   case 0 =&gt; 0;
   case 1 =&gt; 1;
@@ -2061,7 +2060,7 @@ fibonacci_(n - 1) + fibonacci_(n - 2)
                             修改为
                         </p>
                         <pre>
-fibonacci(n - 1) + fibonacci(n - 2)
+memo(fibonacci_)(n - 1) + memo(fibonacci_)(n - 2)
 </pre>
                         <p>
                             可以提高更多性能。
