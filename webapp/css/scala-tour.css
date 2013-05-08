@@ -316,4 +316,5 @@ line-height: 2;
 
 #disqus_thread {
 	height:600px;
+	overflow: auto;
 }
