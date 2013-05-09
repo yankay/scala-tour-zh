@@ -247,6 +247,10 @@ color: #222;
 	margin-top: 150px;
 }
 
+.active .chapter .btn{
+}
+
+
 .step-nav{
 	position: absolute;
 	top: 90%;
