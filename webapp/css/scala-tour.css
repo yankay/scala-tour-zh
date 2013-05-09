@@ -235,9 +235,6 @@ color: #222;
      opacity:0;
 }
 
-.chapter .mouse{
-	cursor: pointer;
-}
 .chapter h2{
 	font-size: 160px;
 }
