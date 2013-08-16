@@ -32,7 +32,7 @@ println(helloWorld)
 def square(a: Int) = a * a
 
 def squareWithBlock(a: Int) = {
-	a * a
+  a * a
 }
 
 val squareVal = (a: Int) => a * a
@@ -62,16 +62,16 @@ import scala.reflect.io.File
 import java.util.Scanner
 
 def withScanner(f: File, op: Scanner => Unit) = {
-	val scanner = new Scanner(f.bufferedReader)
-	try {
-		op(scanner)
-	} finally {
-		scanner.close()
-	}
+  val scanner = new Scanner(f.bufferedReader)
+  try {
+    op(scanner)
+  } finally {
+    scanner.close()
+  }
 }
 
 withScanner(File("/proc/self/stat"),
-	scanner => println("pid is " + scanner.next()))
+  scanner => println("pid is " + scanner.next()))
 ```
 
 
@@ -92,7 +92,7 @@ withScanner(File("/proc/self/stat"),
 val logEnable = false
 
 def log(msg: String) =
-	if (logEnable) println(msg)
+  if (logEnable) println(msg)
 
 val MSG = "programing is running"
 
@@ -111,13 +111,13 @@ obama.age()的函数调用，可以省略小括号，简化为obama.age。
 ```
 class Persion(val firstName: String, val lastName: String) {
 
-	private var _age = 0
-	def age = _age
-	def age_=(newAge: Int) = _age = newAge
+  private var _age = 0
+  def age = _age
+  def age_=(newAge: Int) = _age = newAge
 
-	def fullName() = firstName + " " + lastName
+  def fullName() = firstName + " " + lastName
 
-	override def toString() = fullName()
+  override def toString() = fullName()
 }
 
 val obama: Persion = new Persion("Barack", "Obama")
@@ -138,20 +138,20 @@ println("age: " + obama.age())
 
 ```
 def withClose(closeAble: { def close(): Unit }, op: { def close(): Unit } => Unit) {
-	try {
-		op(closeAble)
-	} finally {
-		closeAble.close()
-	}
+  try {
+    op(closeAble)
+  } finally {
+    closeAble.close()
+  }
 }
 
 class Connection {
-	def close() = println("close Connection")
+  def close() = println("close Connection")
 }
 
 val conn: Connection = new Connection()
 withClose(conn, conn =>
-	println("do something with Connection"))
+  println("do something with Connection"))
 ```
 
 
@@ -167,20 +167,20 @@ def add(x:Int)(y:Int) = x + y 是上面的简化写法
 
 ```
 def withClose(closeAble: { def close(): Unit })(op: { def close(): Unit } => Unit) {
-	try {
-		op(closeAble)
-	} finally {
-		closeAble.close()
-	}
+  try {
+    op(closeAble)
+  } finally {
+    closeAble.close()
+  }
 }
 
 class Connection {
-	def close() = println("close Connection")
+  def close() = println("close Connection")
 }
 
 val conn: Connection = new Connection()
 withClose(conn)(conn =>
-	println("do something with Connection"))
+  println("do something with Connection"))
 ```
 
 
@@ -192,26 +192,26 @@ withClose(conn)(conn =>
 
 ```
 def withClose[A <: { def close(): Unit }, B](closeAble: A)(op: A => B) {
-	try {
-		op(closeAble)
-	} finally {
-		closeAble.close()
-	}
+  try {
+    op(closeAble)
+  } finally {
+    closeAble.close()
+  }
 }
 
 class Connection {
-	val msg = "123456"
-	def close() = println("close Connection")
+  val msg = "123456"
+  def close() = println("close Connection")
 }
 
 val conn: Connection = new Connection()
 val msg = withClose(conn) { conn =>
-	{
-		println("do something with Connection")
-		conn.msg
-	}
+  {
+    println("do something with Connection")
+    conn.msg
+  }
 }
-	
+  
 println(msg)
 ```
 
@@ -223,17 +223,17 @@ Traits就像是有函数体的Interface。使用with关键字来混入。
 
 ```
 trait ForEachAble[A] {
-	def iterator: java.util.Iterator[A]
-	def foreach(f: A => Unit) = {
-		val iter = iterator
-		while (iter.hasNext)
-			f(iter.next)
-	}
+  def iterator: java.util.Iterator[A]
+  def foreach(f: A => Unit) = {
+    val iter = iterator
+    while (iter.hasNext)
+      f(iter.next)
+  }
 }
 
 trait JsonAble {
-	override def toString() =
-		scala.util.parsing.json.JSONFormat.defaultFormatter(this)
+  override def toString() =
+    scala.util.parsing.json.JSONFormat.defaultFormatter(this)
 }
 
 val list = new java.util.ArrayList[Int]() with ForEachAble[Int]
@@ -259,10 +259,10 @@ println("Json: " + list.toString())
 
 ```
 def fibonacci(in: Any): Int = in match {
-	case 0 => 0
-	case 1 => 1
-	case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
-	case _ => 0
+  case 0 => 0
+  case 1 => 1
+  case n: Int => fibonacci(n - 1) + fibonacci(n - 2)
+  case _ => 0
 }
 
 println(fibonacci(3))
@@ -271,7 +271,7 @@ println(fibonacci(3))
 ### Case Class
 
 case class 顾名思义就是为case语句专门设计的类。
-在普通类的基础上添加了和类名一直的工厂方法，
+在普通类的基础上添加了和类名一致的工厂方法，
 还添加了hashcode,equals和toString方法。
 试试最后添加  println(Sum(1,2)) 。
 由于使用了require(n >= 0)来检验参数，尝试使用负数，会抛出异常。
@@ -299,8 +299,8 @@ println(value(FibonacciExpr(3)))
 ### 函数式的威力
 
 这个例子是判断一个List中是否含有奇数。
-第一行到倒数第二行是使用for循环的过程式编程解决。最后一行是通过函数式编程解决。
-通过将函数作为参数，可以使程序极为简洁。其中 _ % 2 == 1 是 (x: Int) => x % 2 == 的简化写法。
+第一行到倒数第二行是使用for循环的指令式编程解决。最后一行是通过函数式编程解决。
+通过将函数作为参数，可以使程序极为简洁。其中 _ % 2 == 1 是 (x: Int) => x % 2 == 1 的简化写法。
 相比于Ruby等动态语言,这威力来自于科学而不是魔法
 
 ```
